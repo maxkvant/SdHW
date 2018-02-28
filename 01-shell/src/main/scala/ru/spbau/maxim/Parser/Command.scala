@@ -6,7 +6,7 @@ sealed trait Command {
 
 sealed trait CommandInput
 object StdIn extends CommandInput
-case class StringsInput(strs: Seq[String]) extends CommandInput
+case class StringsInput(strings: Seq[String]) extends CommandInput
 
 case class Echo(override val input: StringsInput) extends Command
 

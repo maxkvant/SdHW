@@ -36,12 +36,12 @@ class Evaluator {
         "Exit"
 
       case Assignment(name, str) =>
-        Model.env += (name -> str)
+        Model.putEnv(name, str)
         ""
 
       case ExternalCommand(cmd) =>
         import scala.sys.process._
-        cmd.strs.lineStream.mkString("\n")
+        cmd.strings.lineStream.mkString("\n")
     }
   }
 

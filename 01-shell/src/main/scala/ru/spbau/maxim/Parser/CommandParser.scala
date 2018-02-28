@@ -37,7 +37,7 @@ class CommandParser extends JavaTokenParsers {
 }
 
 object CommandParser extends CommandParser {
-  def parse(string: String): Command = {
+  private def parse(string: String): Command = {
     parse(command, string) match {
       case Success(command: Command, _) => command
       case error => throw new IllegalArgumentException(error.toString)

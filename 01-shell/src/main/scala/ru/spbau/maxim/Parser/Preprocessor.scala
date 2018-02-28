@@ -10,7 +10,7 @@ object Preprocessor extends JavaTokenParsers {
   override val skipWhitespace = false
 
   private def replacerEnv: Parser[String] = {
-    rep("'.*'".r | ("$" ~> variableRegex ^^ Model.env) | "[^$]".r) ^^ {
+    rep("'.*'".r | ("$" ~> variableRegex ^^ Model.getEnvValue) | "[^$]".r) ^^ {
       _.mkString
     }
   }
