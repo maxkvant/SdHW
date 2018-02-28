@@ -1,6 +1,6 @@
 package ru.spbau.maxim
 
-import java.io.File
+import java.io.{File, PrintWriter}
 
 import ru.spbau.maxim.Parser._
 
@@ -25,7 +25,7 @@ class Evaluator {
 
       case Wc(input) => inputTexts(input).map { text =>
         val lines = text.split("\n").length
-        val words = text.split("\\s").length
+        val words = text.split("\\s").count(!_.isEmpty)
         s"$lines $words ${text.length}"
       }.mkString("\n")
 
@@ -41,7 +41,21 @@ class Evaluator {
 
       case ExternalCommand(cmd) =>
         import scala.sys.process._
-        cmd.strings.lineStream.mkString("\n")
+        var output = ""
+        stringSeqToProcess(cmd.strings).run(new ProcessIO(
+          in => {
+            val writer = new PrintWriter(in)
+            writer.print(stdIn)
+            writer.close()
+          },
+          out => {
+            val src = scala.io.Source.fromInputStream(out)
+            output = src.getLines().mkString("\n")
+            src.close()
+          },
+          _.close()
+        ))
+        output
     }
   }
 
@@ -55,11 +69,27 @@ class Evaluator {
     lastOutput
   }
 
+  def evaluate(commandStr: String): String = {
+    try {
+      val commands: Seq[Command] = CommandParser.parse(commandStr)
+      try {
+        evaluate(commands)
+      } catch {
+        case e: Exception => s"Error executing command:\n${e.getMessage}"
+      }
+    } catch {
+      case e: Exception => "parsing error"
+    }
+
+
+
+
+    }
+
   def loop(): Unit = {
     while (continue) {
       val commandStr: String = scala.io.StdIn.readLine()
-      val commands: Seq[Command] = CommandParser.apply(commandStr)
-      val output: String = evaluate(commands)
+      val output = evaluate(commandStr)
       println(output)
     }
   }

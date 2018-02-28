@@ -16,7 +16,6 @@ object Preprocessor extends JavaTokenParsers {
   }
 
   private def replaceEnv(string: String): String = {
-    println(string)
     parse(replacerEnv, string) match {
       case Success(str, _) => str
       case error => throw new IllegalArgumentException(error.toString)
