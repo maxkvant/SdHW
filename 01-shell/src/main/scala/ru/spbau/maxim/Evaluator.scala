@@ -59,7 +59,6 @@ class Evaluator {
     while (continue) {
       val commandStr: String = scala.io.StdIn.readLine()
       val commands: Seq[Command] = CommandParser.apply(commandStr)
-      println(commands)
       val output: String = evaluate(commands)
       println(output)
     }
