@@ -17,7 +17,7 @@ class Evaluator {
     }
 
     command match {
-      case _: Echo => command.input match {
+      case echo: Echo => echo.input match {
         case StringsInput(strs) => strs.mkString(" ")
       }
 
@@ -41,7 +41,7 @@ class Evaluator {
 
       case ExternalCommand(cmd) =>
         import scala.sys.process._
-        Process(cmd).lineStream.mkString("\n")
+        cmd.strs.lineStream.mkString("\n")
     }
   }
 
@@ -58,7 +58,7 @@ class Evaluator {
   def loop(): Unit = {
     while (continue) {
       val commandStr: String = scala.io.StdIn.readLine()
-      val commands: Seq[Command] = CommandParser.parseCommands(commandStr)
+      val commands: Seq[Command] = CommandParser.apply(commandStr)
       println(commands)
       val output: String = evaluate(commands)
       println(output)

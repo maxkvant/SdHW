@@ -20,4 +20,4 @@ case class Cat(override val input: CommandInput) extends Command
 
 case class Assignment(variable: String, value: String) extends Command
 
-case class ExternalCommand(cmd: String) extends Command
+case class ExternalCommand(override val input: StringsInput) extends Command

@@ -1,15 +1,11 @@
 package ru.spbau.maxim.Parser
-import java.text.ParseException
-
-import com.sun.org.apache.xpath.internal.operations.Variable
 import ru.spbau.maxim.Model
 
+import scala.util.matching.Regex
 import scala.util.parsing.combinator._
 
 class CommandParser extends JavaTokenParsers {
   override def skipWhitespace: Boolean = true
-
-  def token: Parser[String] = "(\".*\"|'.*')".r ^^ { str => str.substring(1, str.length - 1) } | "\\S+".r
 
   def echo: Parser[Echo] = "echo" ~> stringsInput ^^ { input => Echo(input) }
 
@@ -27,9 +23,11 @@ class CommandParser extends JavaTokenParsers {
 
   def command: Parser[Command] = assignment | echo | wc | cat | pwd | exit | externalCommand
 
-  def externalCommand: Parser[ExternalCommand] = "Process" ~> token <~ stdInput ^^ { str => ExternalCommand(str)}
+  def externalCommand: Parser[ExternalCommand] = "Process" ~> stringsInput1 <~ stdInput ^^ { str => ExternalCommand(str)}
 
-  def variableName: Parser[String] = "[_A-Za-z0-9]*".r
+  private def variableName: Parser[String] = Preprocessor.variableRegex
+
+  private def token: Parser[String] = "(\"[^\"]*\"|'[^']*')".r ^^ { str => str.substring(1, str.length - 1) } | "\\S+".r
 
   private def stdInput: Parser[StdIn.type ] = "\\s*\\z".r ^^ { _ => StdIn }
 
@@ -39,10 +37,6 @@ class CommandParser extends JavaTokenParsers {
 }
 
 object CommandParser extends CommandParser {
-  private def replacerEnv: Parser[String] =
-    rep(("$" <~ variableName ^^ { s => Model.env(s) + " "}) | "[^\\$]+".r ^^ { s => s}) ^^ { _.mkString }
-
-
   def parse(string: String): Command = {
     parse(command, string) match {
       case Success(command: Command, _) => command
@@ -50,12 +44,5 @@ object CommandParser extends CommandParser {
     }
   }
 
-  def replaceEnv(string: String): String = {
-    parse(replacerEnv, string) match {
-      case Success(str, _) => str
-      case error => throw new IllegalArgumentException(error.toString)
-    }
-  }
-
-  def parseCommands: String => Seq[Command] = _.split("\\|").map(replaceEnv).map(parse)
+  def apply: String => Seq[Command] = Preprocessor.apply(_).map(parse)
 }
