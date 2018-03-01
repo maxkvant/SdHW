@@ -2,7 +2,10 @@ package ru.spbau.maxim
 
 import java.io.{File, PrintWriter}
 
+import ru.spbau.maxim.Parser.Command.StringArgs
 import ru.spbau.maxim.Parser._
+
+import scala.io.Source
 
 /** Can evaluate command, pipeline
   * Can start REPL
@@ -13,28 +16,25 @@ class Evaluator {
   /** Evaluates command
     */
   def evaluate(command: Command, stdIn: String): String = {
-    def inputTexts(input: CommandInput): Seq[String] = {
-      input match {
-        case StdIn => List(stdIn)
-        case StringsInput(strs) =>
-          strs.map {file => scala.io.Source.fromFile(file).getLines().mkString("\n") }
+    def inputTexts(files: StringArgs): Seq[String] = {
+      files match {
+        case Nil => stdIn :: Nil
+        case _ => files.map { file => Source.fromFile(file).getLines().mkString("\n") }
       }
     }
 
     command match {
-      case echo: Echo => echo.input match {
-        case StringsInput(strs) => strs.mkString(" ")
-      }
+      case echo: Echo => echo.args.mkString(" ")
 
       case Pwd => new File(".").getCanonicalPath
 
-      case Wc(input) => inputTexts(input).map { text =>
+      case Wc(args) => inputTexts(args).map { text =>
         val lines = text.split("\n").length
         val words = text.split("\\s").count(!_.isEmpty)
         s"$lines $words ${text.length}"
       }.mkString("\n")
 
-      case Cat(input) => inputTexts(input).mkString("\n")
+      case Cat(files) => inputTexts(files).mkString("\n")
 
       case Exit =>
         continue = false
@@ -44,17 +44,17 @@ class Evaluator {
         Model.putEnv(name, str)
         ""
 
-      case ExternalCommand(cmd) =>
+      case ExternalCommand(tokens) =>
         import scala.sys.process._
         var output = ""
-        stringSeqToProcess(cmd.strings).run(new ProcessIO(
+        stringSeqToProcess(tokens).run(new ProcessIO(
           in => {
             val writer = new PrintWriter(in)
             writer.print(stdIn)
             writer.close()
           },
           out => {
-            val src = scala.io.Source.fromInputStream(out)
+            val src = Source.fromInputStream(out)
             output = src.getLines().mkString("\n")
             src.close()
           },

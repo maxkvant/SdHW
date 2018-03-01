@@ -6,29 +6,29 @@ class CommandParserTest extends FunSuite with Matchers {
   import CommandParser.parseCommand
 
   test("echoParsing") {
-    parseCommand("echo 1  2 3") should be (Echo(StringsInput("1" :: "2" :: "3" :: Nil)))
+    parseCommand("echo 1  2 3") should be (Echo("1" :: "2" :: "3" :: Nil))
 
-    parseCommand(" echo ") should be (Echo(StringsInput(Nil)))
+    parseCommand(" echo ") should be (Echo(Nil))
 
-    parseCommand(" echo ' a ' \"b \" c ") should be (Echo(StringsInput(" a " :: "b " :: "c" :: Nil)))
+    parseCommand(" echo ' a ' \"b \" c ") should be (Echo(" a " :: "b " :: "c" :: Nil))
   }
 
   test("wcParsing") {
-    parseCommand("wc build.sbt") should be (Wc(StringsInput("build.sbt" :: Nil)))
+    parseCommand("wc build.sbt") should be (Wc("build.sbt" :: Nil))
 
-    parseCommand(" wc ") should be (Wc(StdIn))
+    parseCommand(" wc ") should be (Wc(Nil))
 
-    parseCommand(" wc 'буква а.txt' readme.md ") should be (Wc(StringsInput("буква а.txt" :: "readme.md" :: Nil)))
+    parseCommand(" wc 'буква а.txt' readme.md ") should be (Wc("буква а.txt" :: "readme.md" :: Nil))
 
-    parseCommand(" wc \"'записки охотника'\" 'прив '") should be (Wc(StringsInput("'записки охотника'" :: "прив " :: Nil)))
+    parseCommand(" wc \"'записки охотника'\" 'прив '") should be (Wc("'записки охотника'" :: "прив " :: Nil))
   }
 
   test("catParsing") {
-    parseCommand("cat  build.sbt") should be (Cat(StringsInput("build.sbt" :: Nil)))
+    parseCommand("cat  build.sbt") should be (Cat("build.sbt" :: Nil))
 
-    parseCommand(" cat  ") should be (Cat(StdIn))
+    parseCommand(" cat  ") should be (Cat(Nil))
 
-    parseCommand(" cat  'буква а.txt'  readme.md ") should be (Cat(StringsInput("буква а.txt" :: "readme.md" :: Nil)))
+    parseCommand(" cat  'буква а.txt'  readme.md ") should be (Cat("буква а.txt" :: "readme.md" :: Nil))
   }
 
   test("pwdParsing") {
@@ -54,14 +54,14 @@ class CommandParserTest extends FunSuite with Matchers {
   }
 
   test("Process parsing") {
-    parseCommand("Process wc") should be (ExternalCommand(StringsInput("wc" :: Nil)))
+    parseCommand("Process wc") should be (ExternalCommand("wc" :: Nil))
 
-    parseCommand("Process echo 1 2 3") should be (ExternalCommand(StringsInput("echo" :: "1" :: "2" :: "3" :: Nil)))
+    parseCommand("Process echo 1 2 3") should be (ExternalCommand("echo" :: "1" :: "2" :: "3" :: Nil))
   }
 
   test("pipelineParsing") {
     CommandParser.parse("cat build.sbt | wc | echo") should be (
-      Cat(StringsInput("build.sbt" :: Nil)) :: Wc(StdIn) :: Echo(StringsInput(Nil)) :: Nil
+      Cat("build.sbt" :: Nil) :: Wc(Nil) :: Echo(Nil) :: Nil
     )
   }
 }

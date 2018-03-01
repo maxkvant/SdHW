@@ -1,4 +1,6 @@
 package ru.spbau.maxim.Parser
+import ru.spbau.maxim.Parser.Command.StringArgs
+
 import scala.util.parsing.combinator._
 
 /** Contains parsers, which can parse commands
@@ -10,11 +12,11 @@ class CommandParser extends JavaTokenParsers {
     */
   def command: Parser[Command] = assignment | echo | wc | cat | pwd | exit | externalCommand
 
-  private def echo: Parser[Echo] = "echo" ~> stringsInput ^^ { input => Echo(input) }
+  private def echo: Parser[Echo] = "echo" ~> stringArgs ^^ { args => Echo(args) }
 
-  private def wc: Parser[Wc] = "wc" ~> (stringsInput1 | emptyInput) ^^ { input => Wc(input) }
+  private def wc: Parser[Wc] = "wc" ~> stringArgs ^^ { files => Wc(files) }
 
-  private def cat: Parser[Cat] = "cat" ~> (stringsInput1 | emptyInput) ^^ { input => Cat(input) }
+  private def cat: Parser[Cat] = "cat" ~> stringArgs ^^ { files => Cat(files) }
 
   private def pwd: Parser[Pwd.type] = ("pwd" <~ emptyInput) ^^ { _ => Pwd }
 
@@ -24,7 +26,8 @@ class CommandParser extends JavaTokenParsers {
     case variable ~ str => Assignment(variable, str)
   }
 
-  private def externalCommand: Parser[ExternalCommand] = "Process" ~> stringsInput1 <~ emptyInput ^^ { str => ExternalCommand(str)}
+  private def externalCommand: Parser[ExternalCommand] =
+    "Process" ~> stringArgs1 <~ emptyInput ^^ { args => ExternalCommand(args) }
 
   private def variableName: Parser[String] = Preprocessor.variableRegex
 
@@ -32,9 +35,9 @@ class CommandParser extends JavaTokenParsers {
 
   private def emptyInput: Parser[StdIn.type ] = "\\s*\\z".r ^^ { _ => StdIn }
 
-  private def stringsInput1: Parser[StringsInput] = rep1(token) <~ emptyInput ^^ { strs => StringsInput(strs) }
+  private def stringArgs1: Parser[StringArgs] = rep1(token) <~ emptyInput
 
-  private def stringsInput: Parser[StringsInput] = rep(token) <~ emptyInput ^^ { strs => StringsInput(strs) }
+  private def stringArgs: Parser[StringArgs] = rep(token) <~ emptyInput
 }
 
 object CommandParser extends CommandParser {
