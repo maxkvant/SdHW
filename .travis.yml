@@ -6,4 +6,4 @@ os:
 env:
   - SOURCE_DIR_1=01-shell
 script:
-  - cd $SOURCE_DIR_1 && sbt ++$TRAVIS_SCALA_VERSION test && cd ..
+  - cd $SOURCE_DIR_1 && sbt ++$TRAVIS_SCALA_VERSION test && cd .. 
