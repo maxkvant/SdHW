@@ -1,29 +1,30 @@
 package ru.spbau.maxim.Parser
-import ru.spbau.maxim.Model
-
-import scala.util.matching.Regex
 import scala.util.parsing.combinator._
 
+/** Contains parsers, which can parse commands
+  */
 class CommandParser extends JavaTokenParsers {
   override def skipWhitespace: Boolean = true
 
-  def echo: Parser[Echo] = "echo" ~> stringsInput ^^ { input => Echo(input) }
+  /** Parser for all commands
+    */
+  def command: Parser[Command] = assignment | echo | wc | cat | pwd | exit | externalCommand
 
-  def wc: Parser[Wc] = "wc" ~> (stringsInput1 | emptyInput) ^^ { input => Wc(input) }
+  private def echo: Parser[Echo] = "echo" ~> stringsInput ^^ { input => Echo(input) }
 
-  def cat: Parser[Cat] = "cat" ~> (stringsInput1 | emptyInput) ^^ { input => Cat(input) }
+  private def wc: Parser[Wc] = "wc" ~> (stringsInput1 | emptyInput) ^^ { input => Wc(input) }
 
-  def pwd: Parser[Pwd.type] = ("pwd" <~ emptyInput) ^^ { _ => Pwd }
+  private def cat: Parser[Cat] = "cat" ~> (stringsInput1 | emptyInput) ^^ { input => Cat(input) }
 
-  def exit: Parser[Exit.type] = "exit" ^^ { _ => Exit }
+  private def pwd: Parser[Pwd.type] = ("pwd" <~ emptyInput) ^^ { _ => Pwd }
 
-  def assignment: Parser[Assignment] = (variableName <~ "=") ~ token <~ emptyInput ^^ {
+  private def exit: Parser[Exit.type] = "exit" ^^ { _ => Exit }
+
+  private def assignment: Parser[Assignment] = (variableName <~ "=") ~ token <~ emptyInput ^^ {
     case variable ~ str => Assignment(variable, str)
   }
 
-  def command: Parser[Command] = assignment | echo | wc | cat | pwd | exit | externalCommand
-
-  def externalCommand: Parser[ExternalCommand] = "Process" ~> stringsInput1 <~ emptyInput ^^ { str => ExternalCommand(str)}
+  private def externalCommand: Parser[ExternalCommand] = "Process" ~> stringsInput1 <~ emptyInput ^^ { str => ExternalCommand(str)}
 
   private def variableName: Parser[String] = Preprocessor.variableRegex
 
@@ -37,6 +38,8 @@ class CommandParser extends JavaTokenParsers {
 }
 
 object CommandParser extends CommandParser {
+  /** Parses single command
+    */
   def parseCommand(string: String): Command = {
     parse(command, string) match {
       case Success(command: Command, _) => command
@@ -44,5 +47,7 @@ object CommandParser extends CommandParser {
     }
   }
 
+  /** Parses pipeline (command1 | command2 | command3 ...)
+    */
   def parse: String => Seq[Command] = Preprocessor.apply(_).map(parseCommand)
 }

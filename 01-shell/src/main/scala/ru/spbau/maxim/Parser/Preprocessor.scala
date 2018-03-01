@@ -22,5 +22,9 @@ object Preprocessor extends JavaTokenParsers {
     }
   }
 
+  /** Does preprocessing:
+    * 1. splits by pipes
+    * 2. substitutes $variable
+    */
   def apply(command: String): Seq[String] = command.split("\\|").map(replaceEnv)
 }

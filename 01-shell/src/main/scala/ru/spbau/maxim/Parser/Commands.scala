@@ -1,5 +1,7 @@
 package ru.spbau.maxim.Parser
 
+/** Basic trait for any command
+  */
 sealed trait Command {
   val input: CommandInput = StdIn
 }

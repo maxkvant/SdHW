@@ -4,9 +4,14 @@ import java.io.{File, PrintWriter}
 
 import ru.spbau.maxim.Parser._
 
+/** Can evaluate command, pipeline
+  * Can start REPL
+ */
 class Evaluator {
   private var continue = true
 
+  /** Evaluates command
+    */
   def evaluate(command: Command, stdIn: String): String = {
     def inputTexts(input: CommandInput): Seq[String] = {
       input match {
@@ -59,7 +64,10 @@ class Evaluator {
     }
   }
 
-  def evaluate(commands: Seq[Command]): String = {
+  /** Evaluates pipeline
+    * returns result of latest command
+    */
+  def evaluatePipeline(commands: Seq[Command]): String = {
     var lastOutput: String = ""
     for (command <- commands) {
       if (continue) {
@@ -69,27 +77,28 @@ class Evaluator {
     lastOutput
   }
 
-  def evaluate(commandStr: String): String = {
+  /** Parses and evaluates pipeline
+    * returns result of latest command or error message
+    */
+  def evaluatePipeline(commandStr: String): String = {
     try {
       val commands: Seq[Command] = CommandParser.parse(commandStr)
       try {
-        evaluate(commands)
+        evaluatePipeline(commands)
       } catch {
         case e: Exception => s"Error executing command:\n${e.getMessage}"
       }
     } catch {
-      case e: Exception => "parsing error"
+      case e: Exception => "parse error"
     }
+  }
 
-
-
-
-    }
-
+  /** runs REPL
+    */
   def loop(): Unit = {
     while (continue) {
       val commandStr: String = scala.io.StdIn.readLine()
-      val output = evaluate(commandStr)
+      val output = evaluatePipeline(commandStr)
       println(output)
     }
   }
