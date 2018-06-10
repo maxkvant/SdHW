@@ -8,7 +8,9 @@ import java.util.concurrent.TimeUnit
 import java.time.Instant
 import java.util.logging.Logger
 
-
+/**
+ * Messenger for peer to peer connection between two users
+ */
 class Messenger(val userName: String, port: Int, peerAddress: PeerAddress, val onMessage: (Protocol.Message) -> Unit) {
     private val logger = Logger.getLogger(Messenger::class.java.name)
     private val server = ServerBuilder.forPort(port)
