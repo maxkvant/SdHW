@@ -7,8 +7,7 @@ import java.text.SimpleDateFormat
 
 
 
-fun main(args2: Array<String>) {
-    val args = arrayOf("maxim", "12345", "localhost", "23456")
+fun main(args: Array<String>) {
     if(args.size != 4) {
         val help =  """|Usage:
                        |user_name port peer_url peer_port
@@ -18,7 +17,6 @@ fun main(args2: Array<String>) {
 
     val userName = args[0]
     val port = args[1].toInt()
-
     val peerUrl = args[2]
     val peerPort = args[3].toInt()
     val peerAddress = Messenger.PeerAddress(peerUrl, peerPort)
@@ -34,9 +32,6 @@ fun main(args2: Array<String>) {
     }
 
     val messenger = Messenger(userName, port, peerAddress, onMessage)
-    val messenger2 = Messenger("messenger2", peerPort, Messenger.PeerAddress("localhost", port), onMessage)
-    messenger2.sendMessage("прив")
-
     while (true) {
         val line: String? = readLine()
         if (line == null || line == "exit") {
