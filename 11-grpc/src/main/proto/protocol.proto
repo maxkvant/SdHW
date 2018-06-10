@@ -1,0 +1,19 @@
+
+syntax = "proto3";
+
+option java_package = "ru.spbau.maxim";
+
+import "google/protobuf/timestamp.proto";
+
+message Message {
+    string userName = 1;
+    google.protobuf.Timestamp date = 2;
+    string text = 3;
+}
+
+message EmptyResult {
+}
+
+service MessengerService {
+    rpc SendMessage(Message) returns (EmptyResult) {}
+}
