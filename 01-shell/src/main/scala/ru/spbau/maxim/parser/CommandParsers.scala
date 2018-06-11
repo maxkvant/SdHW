@@ -1,6 +1,6 @@
-package ru.spbau.maxim.Parser
+package ru.spbau.maxim.parser
 
-import ru.spbau.maxim.comands._
+import ru.spbau.maxim.commands._
 
 /** Contains parsers, which parses commands
   */

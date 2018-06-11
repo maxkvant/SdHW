@@ -1,4 +1,4 @@
-package ru.spbau.maxim.comands
+package ru.spbau.maxim.commands
 
 import java.io.File
 

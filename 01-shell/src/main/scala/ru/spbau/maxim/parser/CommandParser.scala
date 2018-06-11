@@ -1,6 +1,6 @@
-package ru.spbau.maxim.Parser
+package ru.spbau.maxim.parser
 
-import ru.spbau.maxim.comands.Command
+import ru.spbau.maxim.commands.Command
 
 trait CommandParser {
   /** Parses single command

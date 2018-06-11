@@ -1,7 +1,7 @@
 package ru.spbau.maxim
 
-import ru.spbau.maxim.Parser._
-import ru.spbau.maxim.comands._
+import ru.spbau.maxim.parser._
+import ru.spbau.maxim.commands._
 import ru.spbau.maxim.model.Model
 
 /** Can evaluate command, pipeline

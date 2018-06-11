@@ -1,7 +1,7 @@
 package ru.spbau.maxim
 
 import org.scalatest.{FunSuite, Matchers}
-import ru.spbau.maxim.Parser.{CommandParser, PreprocessorImpl}
+import ru.spbau.maxim.parser.{CommandParser, PreprocessorImpl}
 import ru.spbau.maxim.model.ModelImpl
 
 import scala.reflect.io.Path

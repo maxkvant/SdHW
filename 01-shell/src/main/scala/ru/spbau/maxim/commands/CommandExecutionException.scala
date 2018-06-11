@@ -1,4 +1,4 @@
-package ru.spbau.maxim.comands
+package ru.spbau.maxim.commands
 
 case class CommandExecutionException(
   private val message: String = "",

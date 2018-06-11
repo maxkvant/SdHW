@@ -1,7 +1,7 @@
-package ru.spbau.maxim.Parser
+package ru.spbau.maxim.parser
 
 import org.scalatest.{FunSuite, Matchers}
-import ru.spbau.maxim.comands._
+import ru.spbau.maxim.commands._
 import ru.spbau.maxim.model.{Model, ModelImpl}
 
 class CommandParserTest extends FunSuite with Matchers {

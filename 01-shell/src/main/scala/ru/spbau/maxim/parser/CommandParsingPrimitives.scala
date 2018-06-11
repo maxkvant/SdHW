@@ -1,6 +1,6 @@
-package ru.spbau.maxim.Parser
+package ru.spbau.maxim.parser
 
-import ru.spbau.maxim.comands.Command.StringArgs
+import ru.spbau.maxim.commands.Command.StringArgs
 import scala.util.parsing.combinator.JavaTokenParsers
 
 /** Contains parsers, which can be used in command parsing

@@ -1,6 +1,6 @@
 package ru.spbau.maxim
 
-import ru.spbau.maxim.Parser.{CommandParser, PreprocessorImpl}
+import ru.spbau.maxim.parser.{CommandParser, PreprocessorImpl}
 import ru.spbau.maxim.model._
 
 object Main {

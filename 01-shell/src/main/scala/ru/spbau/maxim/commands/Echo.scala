@@ -1,6 +1,6 @@
-package ru.spbau.maxim.comands
+package ru.spbau.maxim.commands
 
-import ru.spbau.maxim.comands.Command.StringArgs
+import ru.spbau.maxim.commands.Command.StringArgs
 import ru.spbau.maxim.model.Model
 
 /** Prints args, separated by space

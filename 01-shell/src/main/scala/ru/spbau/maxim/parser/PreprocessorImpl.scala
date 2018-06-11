@@ -1,4 +1,4 @@
-package ru.spbau.maxim.Parser
+package ru.spbau.maxim.parser
 
 import ru.spbau.maxim.model.Model
 

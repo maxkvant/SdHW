@@ -1,4 +1,4 @@
-package ru.spbau.maxim.Parser
+package ru.spbau.maxim.parser
 
 import scala.util.matching.Regex
 
