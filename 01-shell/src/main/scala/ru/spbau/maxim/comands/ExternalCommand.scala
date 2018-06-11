@@ -12,9 +12,9 @@ import scala.io.Source
 case class ExternalCommand(tokens: StringArgs) extends Command {
   override def execute(stdIn: String)(implicit model: Model): String = {
     import scala.sys.process._
-    var output = ""
 
     try {
+      var output = ""
       stringSeqToProcess(tokens).run(new ProcessIO(
         in => {
           val writer = new PrintWriter(in)
@@ -27,11 +27,12 @@ case class ExternalCommand(tokens: StringArgs) extends Command {
           src.close()
         },
         _.close()
-      ))
+      )).exitValue()
+      output
     } catch {
       case e: Exception =>
         throw CommandExecutionException("command execution error: " + e.getMessage, e)
     }
-    output
+
   }
 }
