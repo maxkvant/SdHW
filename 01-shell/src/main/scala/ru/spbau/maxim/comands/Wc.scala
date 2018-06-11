@@ -5,6 +5,9 @@ import ru.spbau.maxim.model.Model
 
 import scala.io.Source
 
+/** If files ins't empty seq, counts lines, words, symbols in files,
+  * Otherwise counts lines, words, symbols in stdin
+  */
 case class Wc(files: StringArgs) extends Command {
   override def execute(stdIn: String)(implicit model: Model): String = {
     val inputTexts: Seq[String] =

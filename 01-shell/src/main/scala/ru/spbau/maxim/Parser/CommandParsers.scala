@@ -2,7 +2,7 @@ package ru.spbau.maxim.Parser
 
 import ru.spbau.maxim.comands._
 
-/** Contains parsers, which can parse commands
+/** Contains parsers, which parses commands
   */
 class CommandParsers extends CommandParsingPrimitives  {
   override def skipWhitespace: Boolean = true

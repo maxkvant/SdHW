@@ -3,6 +3,8 @@ package ru.spbau.maxim.Parser
 import scala.util.matching.Regex
 
 trait Preprocessor {
+  /** Does preprocessing
+    */
   def process(command: String): Seq[String]
 }
 

@@ -7,6 +7,8 @@ import ru.spbau.maxim.model.Model
 
 import scala.io.Source
 
+/** Executes external command
+  */
 case class ExternalCommand(tokens: StringArgs) extends Command {
   override def execute(stdIn: String)(implicit model: Model): String = {
     import scala.sys.process._

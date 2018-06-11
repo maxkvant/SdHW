@@ -5,6 +5,9 @@ import ru.spbau.maxim.model.Model
 
 import scala.io.Source
 
+/** If files ins't empty seq, prints content from files,
+  * Otherwise prints stdin content
+  */
 case class Cat(files: StringArgs) extends Command {
   override def execute(stdIn: String)(implicit model: Model): String = {
     def inputTexts(files: StringArgs): Seq[String] = {

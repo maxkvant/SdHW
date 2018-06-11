@@ -3,6 +3,8 @@ package ru.spbau.maxim.Parser
 import ru.spbau.maxim.comands.Command.StringArgs
 import scala.util.parsing.combinator.JavaTokenParsers
 
+/** Contains parsers, which can be used in command parsing
+  */
 class CommandParsingPrimitives extends JavaTokenParsers {
     override def skipWhitespace: Boolean = true
 
