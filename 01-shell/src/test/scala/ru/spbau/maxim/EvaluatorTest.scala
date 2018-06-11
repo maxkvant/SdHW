@@ -1,17 +1,12 @@
 package ru.spbau.maxim
 
 import org.scalatest.{FunSuite, Matchers}
-import ru.spbau.maxim.parser.{CommandParser, PreprocessorImpl}
 import ru.spbau.maxim.model.ModelImpl
 
 import scala.reflect.io.Path
 
 class EvaluatorTest extends FunSuite with Matchers {
-  def genEvalutor: Evaluator = {
-    val model = new ModelImpl()
-    val preprocessor = new PreprocessorImpl(model)
-    new Evaluator(preprocessor, CommandParser, model)
-  }
+  def genEvalutor: Evaluator = new EvaluatorImpl(new ModelImpl)
 
   test("echoWcTest") {
     val evaluator = genEvalutor
@@ -47,8 +42,7 @@ class EvaluatorTest extends FunSuite with Matchers {
 
   test("assignTest") {
     val model = new ModelImpl()
-    val preprocessor = new PreprocessorImpl(model)
-    val evaluator = new Evaluator(preprocessor, CommandParser, model)
+    val evaluator = new EvaluatorImpl(model)
 
     evaluator.evaluatePipeline("a='1 '")
     model.getEnvValue("a") should be ("1 ")
