@@ -35,17 +35,23 @@ class Evaluator(
     * returns result of latest command or error message
     */
   def evaluatePipeline(commandStr: String): String = {
-    try {
+    var res = ""
+    val commands: Seq[Command] = try {
       val commandsStrs: Seq[String] = preprocessor.process(commandStr)
-      val commands: Seq[Command] = commandsStrs.map(parser.parseCommand)
-      try {
+      commandsStrs.map(parser.parseCommand)
+    } catch {
+      case e: Exception =>
+        res = "parse error"
+        Seq[Command]()
+    }
+    if (res == "") {
+      res = try {
         evaluatePipeline(commands)
       } catch {
         case e: CommandExecutionException => e.getMessage
       }
-    } catch {
-      case e: Exception => "parse error"
     }
+    res
   }
 
   def finished: Boolean = model.isFinished
