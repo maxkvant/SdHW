@@ -5,12 +5,14 @@ import ru.spbau.maxim.comands._
 import ru.spbau.maxim.model.Model
 
 /** Can evaluate command, pipeline
-  * Can start REPL
- */
-class Evaluator(private val curModel: Model) {
-  private val preprocessor: Preprocessor = new PreprocessorImpl(curModel)
-  private val parser: CommandParser = CommandParser
-  implicit val model: Model = curModel
+  */
+class Evaluator(
+  private val parser: CommandParser,
+  private val curModel: Model
+) {
+  private implicit val model: Model = curModel
+  private val preprocessor: Preprocessor = new PreprocessorImpl(model)
+
 
   /** Evaluates command
     */
@@ -46,13 +48,5 @@ class Evaluator(private val curModel: Model) {
     }
   }
 
-  /** runs REPL
-    */
-  def loop(): Unit = {
-    while (!model.isFinished) {
-      val commandStr: String = scala.io.StdIn.readLine()
-      val output = evaluatePipeline(commandStr)
-      println(output)
-    }
-  }
+  def finished: Boolean = model.isFinished
 }

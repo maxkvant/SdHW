@@ -1,18 +1,21 @@
 package ru.spbau.maxim
 
 import org.scalatest.{FunSuite, Matchers}
+import ru.spbau.maxim.Parser.CommandParser
 import ru.spbau.maxim.model.ModelImpl
 
 import scala.reflect.io.Path
 
 class EvaluatorTest extends FunSuite with Matchers {
+  def genEvalutor: Evaluator = new Evaluator(CommandParser, new ModelImpl())
+
   test("echoWcTest") {
-    val evaluator = new Evaluator(new ModelImpl())
+    val evaluator = genEvalutor
     evaluator.evaluatePipeline("echo '1  23 45' | wc") should be ("1 3 8")
   }
 
   test("exitTest") {
-    val evaluator = new Evaluator(new ModelImpl())
+    val evaluator = genEvalutor
     evaluator.evaluatePipeline("exit | echo 1 | wc") should be ("Exit")
     evaluator.evaluatePipeline("echo '1  23 45' | wc") should be ("")
   }
@@ -30,7 +33,7 @@ class EvaluatorTest extends FunSuite with Matchers {
       tmpFile.createFile(failIfExists = true)
       tmpFile.toFile.printlnAll(fileText)
     }
-    val evaluator = new Evaluator(new ModelImpl())
+    val evaluator = genEvalutor
     evaluator.evaluatePipeline(s"cat ${tmpFile.path}") should be (fileText)
 
     evaluator.evaluatePipeline(s"cat ${tmpFile.path} ${tmpFile.path}") should be (fileText + "\n" + fileText)
@@ -40,7 +43,7 @@ class EvaluatorTest extends FunSuite with Matchers {
 
   test("assignTest") {
     val model = new ModelImpl()
-    val evaluator = new Evaluator(model)
+    val evaluator = new Evaluator(CommandParser, model)
 
     evaluator.evaluatePipeline("a='1 '")
     model.getEnvValue("a") should be ("1 ")
