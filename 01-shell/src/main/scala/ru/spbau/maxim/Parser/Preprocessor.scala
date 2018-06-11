@@ -1,16 +1,15 @@
 package ru.spbau.maxim.Parser
 
-import ru.spbau.maxim.Model
+import ru.spbau.maxim.model.Model
 
 import scala.util.matching.Regex
 import scala.util.parsing.combinator.JavaTokenParsers
 
-object Preprocessor extends JavaTokenParsers {
-  val variableRegex: Regex = "[_A-Za-z0-9]*".r
+class Preprocessor(model: Model) extends JavaTokenParsers {
   override val skipWhitespace = false
 
   private def replacerEnv: Parser[String] = {
-    rep("'.*'".r | ("$" ~> variableRegex ^^ Model.getEnvValue) | "[^$]".r) ^^ {
+    rep("'.*'".r | ("$" ~> Preprocessor.variableRegex ^^ model.getEnvValue) | "[^$]".r) ^^ {
       _.mkString
     }
   }
@@ -26,5 +25,9 @@ object Preprocessor extends JavaTokenParsers {
     * 1. splits by pipes
     * 2. substitutes $variable
     */
-  def apply(command: String): Seq[String] = command.split("\\|").map(replaceEnv)
+  def process(command: String): Seq[String] = command.split("\\|").map(replaceEnv)
+}
+
+object Preprocessor {
+  val variableRegex: Regex = "[_A-Za-z0-9]*".r
 }

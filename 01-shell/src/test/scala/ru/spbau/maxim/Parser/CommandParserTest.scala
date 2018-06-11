@@ -1,6 +1,8 @@
 package ru.spbau.maxim.Parser
 
 import org.scalatest.{FunSuite, Matchers}
+import ru.spbau.maxim.comands._
+import ru.spbau.maxim.model.{Model, ModelImpl}
 
 class CommandParserTest extends FunSuite with Matchers {
   import CommandParser.parseCommand
@@ -60,7 +62,10 @@ class CommandParserTest extends FunSuite with Matchers {
   }
 
   test("pipelineParsing") {
-    CommandParser.parse("cat build.sbt | wc | echo") should be (
+    val model = new ModelImpl()
+    val preprocessor = new Preprocessor(model)
+
+    preprocessor.process("cat build.sbt | wc | echo").map(CommandParser.parseCommand) should be (
       Cat("build.sbt" :: Nil) :: Wc(Nil) :: Echo(Nil) :: Nil
     )
   }

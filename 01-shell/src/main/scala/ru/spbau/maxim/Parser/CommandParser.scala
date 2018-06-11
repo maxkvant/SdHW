@@ -1,5 +1,6 @@
 package ru.spbau.maxim.Parser
-import ru.spbau.maxim.Parser.Command.StringArgs
+import ru.spbau.maxim.comands._
+import ru.spbau.maxim.comands.Command.StringArgs
 
 import scala.util.parsing.combinator._
 
@@ -33,7 +34,7 @@ class CommandParser extends JavaTokenParsers {
 
   private def token: Parser[String] = "(\"[^\"]*\"|'[^']*')".r ^^ { str => str.substring(1, str.length - 1) } | "\\S+".r
 
-  private def emptyInput: Parser[StdIn.type ] = "\\s*\\z".r ^^ { _ => StdIn }
+  private def emptyInput: Parser[Unit] = "\\s*\\z".r ^^ { _ => Unit }
 
   private def stringArgs1: Parser[StringArgs] = rep1(token) <~ emptyInput
 
@@ -49,8 +50,4 @@ object CommandParser extends CommandParser {
       case error => throw new IllegalArgumentException(error.toString)
     }
   }
-
-  /** Parses pipeline (command1 | command2 | command3 ...)
-    */
-  def parse: String => Seq[Command] = Preprocessor.apply(_).map(parseCommand)
 }
