@@ -63,7 +63,7 @@ class CommandParserTest extends FunSuite with Matchers {
 
   test("pipelineParsing") {
     val model = new ModelImpl()
-    val preprocessor = new Preprocessor(model)
+    val preprocessor = new PreprocessorImpl(model)
 
     preprocessor.process("cat build.sbt | wc | echo").map(CommandParser.parseCommand) should be (
       Cat("build.sbt" :: Nil) :: Wc(Nil) :: Echo(Nil) :: Nil

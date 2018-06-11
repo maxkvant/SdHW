@@ -1,19 +1,15 @@
 package ru.spbau.maxim
 
-import java.io.{File, PrintWriter}
-
-import ru.spbau.maxim.comands.Command.StringArgs
 import ru.spbau.maxim.Parser._
 import ru.spbau.maxim.comands._
 import ru.spbau.maxim.model.Model
-
-import scala.io.Source
 
 /** Can evaluate command, pipeline
   * Can start REPL
  */
 class Evaluator(private val curModel: Model) {
-  private val preprocessor = new Preprocessor(curModel)
+  private val preprocessor: Preprocessor = new PreprocessorImpl(curModel)
+  private val parser: CommandParser = CommandParser
   implicit val model: Model = curModel
 
   /** Evaluates command
@@ -39,7 +35,7 @@ class Evaluator(private val curModel: Model) {
   def evaluatePipeline(commandStr: String): String = {
     try {
       val commandsStrs: Seq[String] = preprocessor.process(commandStr)
-      val commands: Seq[Command] = commandsStrs.map(CommandParser.parseCommand)
+      val commands: Seq[Command] = commandsStrs.map(parser.parseCommand)
       try {
         evaluatePipeline(commands)
       } catch {
