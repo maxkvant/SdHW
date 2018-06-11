@@ -7,11 +7,11 @@ import ru.spbau.maxim.model.Model
 /** Can evaluate command, pipeline
   */
 class Evaluator(
+  private val preprocessor: Preprocessor,
   private val parser: CommandParser,
   private val curModel: Model
 ) {
   private implicit val model: Model = curModel
-  private val preprocessor: Preprocessor = new PreprocessorImpl(model)
 
 
   /** Evaluates command
