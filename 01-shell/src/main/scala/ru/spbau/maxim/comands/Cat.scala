@@ -10,13 +10,20 @@ import scala.io.Source
   */
 case class Cat(files: StringArgs) extends Command {
   override def execute(stdIn: String)(implicit model: Model): String = {
-    def inputTexts(files: StringArgs): Seq[String] = {
+    def inputTexts: Seq[String] =
       files match {
         case Nil => stdIn :: Nil
-        case _ => files.map { file => Source.fromFile(file).getLines().mkString("\n") }
+        case _ => files.map { file =>
+          try {
+            Source.fromFile(file).getLines().mkString("\n")
+          } catch {
+            case e: Exception =>
+              throw CommandExecutionException(s"error while reading $file: " + e.getMessage, e)
+          }
+        }
       }
-    }
 
-    inputTexts(files).mkString("\n")
+
+    inputTexts.mkString("\n")
   }
 }

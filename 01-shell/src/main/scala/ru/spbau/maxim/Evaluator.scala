@@ -41,7 +41,7 @@ class Evaluator(
       try {
         evaluatePipeline(commands)
       } catch {
-        case e: Exception => s"Error executing command:\n${e.getMessage}"
+        case e: CommandExecutionException => e.getMessage
       }
     } catch {
       case e: Exception => "parse error"

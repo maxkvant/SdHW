@@ -1,11 +1,6 @@
 package ru.spbau.maxim.comands
 
-import java.io.{File, PrintWriter}
-
-import ru.spbau.maxim.comands.Command.StringArgs
 import ru.spbau.maxim.model.Model
-
-import scala.io.Source
 
 /** Basic trait for any command
   */

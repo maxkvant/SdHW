@@ -13,19 +13,25 @@ case class ExternalCommand(tokens: StringArgs) extends Command {
   override def execute(stdIn: String)(implicit model: Model): String = {
     import scala.sys.process._
     var output = ""
-    stringSeqToProcess(tokens).run(new ProcessIO(
-      in => {
-        val writer = new PrintWriter(in)
-        writer.print(stdIn)
-        writer.close()
-      },
-      out => {
-        val src = Source.fromInputStream(out)
-        output = src.getLines().mkString("\n")
-        src.close()
-      },
-      _.close()
-    ))
+
+    try {
+      stringSeqToProcess(tokens).run(new ProcessIO(
+        in => {
+          val writer = new PrintWriter(in)
+          writer.print(stdIn)
+          writer.close()
+        },
+        out => {
+          val src = Source.fromInputStream(out)
+          output = src.getLines().mkString("\n")
+          src.close()
+        },
+        _.close()
+      ))
+    } catch {
+      case e: Exception =>
+        throw CommandExecutionException("command execution error: " + e.getMessage, e)
+    }
     output
   }
 }

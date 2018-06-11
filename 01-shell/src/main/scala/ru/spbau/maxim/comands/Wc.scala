@@ -13,7 +13,14 @@ case class Wc(files: StringArgs) extends Command {
     val inputTexts: Seq[String] =
       files match {
         case Nil => stdIn :: Nil
-        case _ => files.map { file => Source.fromFile(file).getLines().mkString("\n") }
+        case _ => files.map { file =>
+          try {
+            Source.fromFile(file).getLines().mkString("\n")
+          } catch {
+            case e: Exception =>
+              throw CommandExecutionException(s"error while reading $file: " + e.getMessage, e)
+          }
+        }
       }
 
     inputTexts.map { text =>
