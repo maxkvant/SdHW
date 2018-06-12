@@ -10,6 +10,7 @@ fun main(args: Array<String>) {
                        |user_name port peer_url peer_port
                        |""".trimMargin()
         print(help)
+        return
     }
 
     val userName = args[0]
