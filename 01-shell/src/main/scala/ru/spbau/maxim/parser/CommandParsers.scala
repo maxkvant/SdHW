@@ -33,7 +33,6 @@ class CommandParsers extends CommandParsingPrimitives  {
 
   private def grepArgs(args: Seq[String]): Grep = {
     val argsParser = new GrepArgs(args)
-    argsParser.verify()
     Grep(
       pattern = argsParser.regex(),
       linesAfterMatch = argsParser.A(),
@@ -47,5 +46,7 @@ class CommandParsers extends CommandParsingPrimitives  {
     val w: ScallopOption[Boolean] = opt[Boolean]("w", default = Some(false), required = false)
     val i: ScallopOption[Boolean] = opt[Boolean]("i", default = Some(false), required = false)
     val regex: ScallopOption[String] = trailArg[String](required = true)
+
+    verify()
   }
 }

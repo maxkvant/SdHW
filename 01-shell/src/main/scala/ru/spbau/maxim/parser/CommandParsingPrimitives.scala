@@ -5,7 +5,7 @@ import scala.util.parsing.combinator.JavaTokenParsers
 
 /** Contains parsers, which can be used in command parsing
   */
-class CommandParsingPrimitives extends JavaTokenParsers {
+trait CommandParsingPrimitives extends JavaTokenParsers {
     override def skipWhitespace: Boolean = true
 
     def variableName: Parser[String] = Preprocessor.variableRegex
@@ -17,4 +17,4 @@ class CommandParsingPrimitives extends JavaTokenParsers {
     def stringArgs1: Parser[StringArgs] = rep1(token) <~ emptyInput
 
     def stringArgs: Parser[StringArgs] = rep(token) <~ emptyInput
-  }
+}

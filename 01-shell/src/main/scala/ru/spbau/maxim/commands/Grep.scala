@@ -21,7 +21,12 @@ case class Grep(pattern: String,
       if (matchOnlyWords) {
         patternRenew = s"\\b$pattern\\b"
       }
-      patternRenew.r
+      try {
+        patternRenew.r
+      } catch {
+        case e: Exception =>
+          throw CommandExecutionException(s"wrong regex: '$pattern'", e)
+      }
     }
 
     val lines: Seq[String] = stdIn.split("\n")
