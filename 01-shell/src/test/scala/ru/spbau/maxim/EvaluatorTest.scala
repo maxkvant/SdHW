@@ -1,7 +1,8 @@
 package ru.spbau.maxim
 
 import org.scalatest.{FunSuite, Matchers}
-import ru.spbau.maxim.model.ModelImpl
+import ru.spbau.maxim.model.{Model, ModelImpl}
+import commands.Grep
 
 import scala.reflect.io.Path
 
@@ -15,8 +16,10 @@ class EvaluatorTest extends FunSuite with Matchers {
 
   test("exitTest") {
     val evaluator = genEvalutor
+
+    evaluator.finished should be (false)
     evaluator.evaluatePipeline("exit | echo 1 | wc") should be ("Exit")
-    evaluator.evaluatePipeline("echo '1  23 45' | wc") should be ("")
+    evaluator.finished should be (true)
   }
 
   test("catWcTest") {
@@ -51,5 +54,40 @@ class EvaluatorTest extends FunSuite with Matchers {
     model.getEnvValue("a") should be ("exit")
 
     evaluator.evaluatePipeline("echo $a") should be ("exit")
+  }
+
+  test("grepTest") {
+    implicit val model: Model = new ModelImpl()
+    new Grep("1|2").execute(
+      """
+        |11
+        |2
+        |33
+        |313
+        |4
+      """.stripMargin
+    ).split("\n") should be (List("11", "2", "313"))
+
+    new Grep("1", linesAfterMatch = 2).execute(
+      """|11
+         |1
+         |2
+         |5
+         |33
+         |313
+         |4""".stripMargin
+    ).split("\n") should be (List("11", "1",  "2", "5", "313", "4"))
+
+    new Grep("саша", caseInsensitive = true).execute(
+      "шла Саша по шоссе"
+    ).split("\n") should be (List("шла Саша по шоссе"))
+
+    new Grep("саша", caseInsensitive = false).execute(
+      "шла Саша по шоссе"
+    ).length should be (0)
+
+    new Grep("шав", matchOnlyWords = true).execute(
+      "вкусная шаверма"
+    ).length should be (0)
   }
 }
