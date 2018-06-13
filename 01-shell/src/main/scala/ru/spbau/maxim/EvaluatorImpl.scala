@@ -20,8 +20,11 @@ class EvaluatorImpl(curModel: Model) extends Evaluator {
       val commandsStrs: Seq[String] = preprocessor.process(commandStr)
       commandsStrs.map(parser.parseCommand)
     } catch {
-      case e: Exception =>
+      case e: Error =>
         res = "parse error"
+        Seq[Command]()
+      case e: Exception =>
+        res = "parsing exception"
         Seq[Command]()
     }
     if (res == "") {

@@ -4,10 +4,13 @@ import ru.spbau.maxim.model.Model
 import scala.collection.mutable.ArrayBuffer
 import scala.util.matching.Regex
 
-class Grep(val pattern: String,
-           val linesAfterMatch: Int = 0,
-           val caseInsensitive: Boolean = false,
-           val matchOnlyWords: Boolean = false
+/** searches for pattern in input
+  * returns matching lines
+  */
+case class Grep(pattern: String,
+                linesAfterMatch: Int = 0,
+                caseInsensitive: Boolean = false,
+                matchOnlyWords: Boolean = false
 ) extends Command {
   override def execute(stdIn: String)(implicit model: Model): String = {
     val regex: Regex = {

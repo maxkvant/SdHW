@@ -1,6 +1,7 @@
 package ru.spbau.maxim.parser
 
 import ru.spbau.maxim.commands._
+import org.rogach.scallop.{ScallopConf, ScallopOption}
 
 /** Contains parsers, which parses commands
   */
@@ -9,7 +10,7 @@ class CommandParsers extends CommandParsingPrimitives  {
 
   /** Parser for all commands
     */
-  def command: Parser[Command] = assignment | echo | wc | cat | pwd | exit | externalCommand
+  def command: Parser[Command] = assignment | echo | wc | cat | pwd | exit | externalCommand | grep
 
   def echo: Parser[Echo] = "echo" ~> stringArgs ^^ { args => Echo(args) }
 
@@ -25,6 +26,26 @@ class CommandParsers extends CommandParsingPrimitives  {
     case variable ~ str => Assignment(variable, str)
   }
 
-  private def externalCommand: Parser[ExternalCommand] =
+  def externalCommand: Parser[ExternalCommand] =
     "Process" ~> stringArgs1 <~ emptyInput ^^ { args => ExternalCommand(args) }
+
+  def grep: Parser[Grep] = "grep" ~> (stringArgs1 ^^ grepArgs)
+
+  private def grepArgs(args: Seq[String]): Grep = {
+    val argsParser = new GrepArgs(args)
+    argsParser.verify()
+    Grep(
+      pattern = argsParser.regex(),
+      linesAfterMatch = argsParser.A(),
+      matchOnlyWords = argsParser.w(),
+      caseInsensitive = argsParser.i()
+    )
+  }
+
+  private class GrepArgs(args: Seq[String]) extends ScallopConf(args) {
+    val A: ScallopOption[Int] = opt[Int]("A", default = Some(0), required = false, validate = _ >= 0)
+    val w: ScallopOption[Boolean] = opt[Boolean]("w", default = Some(false), required = false)
+    val i: ScallopOption[Boolean] = opt[Boolean]("i", default = Some(false), required = false)
+    val regex: ScallopOption[String] = trailArg[String](required = true)
+  }
 }
