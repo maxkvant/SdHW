@@ -37,7 +37,8 @@ class CommandParsers extends CommandParsingPrimitives  {
       pattern = argsParser.regex(),
       linesAfterMatch = argsParser.A(),
       matchOnlyWords = argsParser.w(),
-      caseInsensitive = argsParser.i()
+      caseInsensitive = argsParser.i(),
+      files = argsParser.files()
     )
   }
 
@@ -46,6 +47,7 @@ class CommandParsers extends CommandParsingPrimitives  {
     val w: ScallopOption[Boolean] = opt[Boolean]("w", default = Some(false), required = false)
     val i: ScallopOption[Boolean] = opt[Boolean]("i", default = Some(false), required = false)
     val regex: ScallopOption[String] = trailArg[String](required = true)
+    val files: ScallopOption[List[String]] = trailArg[List[String]](required = false, default = Some(List()))
 
     verify()
   }

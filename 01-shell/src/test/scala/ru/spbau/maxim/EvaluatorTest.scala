@@ -85,17 +85,17 @@ class EvaluatorTest extends FunSuite with Matchers {
 
     Grep("саша").execute(
       "шла Саша по шоссе"
-    ).length should be (0)
+    ) should be ("")
 
     Grep("шав", matchOnlyWords = true).execute(
       "вкусная шаверма"
-    ).length should be (0)
+    ) should be ("")
     
     val evaluator = genEvaluator()
 
     evaluator.evaluatePipeline(
       "echo вкусная шаверма | grep -w шав"
-    ).length should be (0)
+    ) should be ("")
 
     evaluator.evaluatePipeline(
       "echo \"a\n2\n3\na\" | grep -A 1 a"
@@ -104,5 +104,22 @@ class EvaluatorTest extends FunSuite with Matchers {
     evaluator.evaluatePipeline(
       "echo шла Саша по шоссе | grep -i саша"
     ).split("\n") should be (List("шла Саша по шоссе"))
+
+    val fileText =
+      """|Корабли лавировали, лавировали, лавировали
+         |да не вылавировали""".stripMargin
+
+    val tmpDir = Path(System.getProperty("java.io.tmpdir"))
+    val fileName = "grep_tmp.txt"
+    val tmpFile = tmpDir.resolve(fileName)
+    println(tmpFile.toAbsolute)
+    if (!tmpFile.exists) {
+      tmpFile.createFile(failIfExists = true)
+      tmpFile.toFile.printlnAll(fileText)
+    }
+
+    evaluator.evaluatePipeline(
+      s"grep -w не $tmpFile $tmpFile"
+    ).split("\n") should be (List("да не вылавировали", "да не вылавировали"))
   }
 }
