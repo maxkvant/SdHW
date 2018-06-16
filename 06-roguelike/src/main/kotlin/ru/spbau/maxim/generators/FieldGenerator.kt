@@ -1,9 +1,10 @@
-package ru.spbau.maxim.model.generators
+package ru.spbau.maxim.generators
 
 import com.github.czyzby.noise4j.map.Grid
-import ru.spbau.maxim.model.Cell
-import ru.spbau.maxim.model.FieldReadOnly
+import ru.spbau.maxim.model.field.Cell
+import ru.spbau.maxim.model.field.FieldReadOnly
 import com.github.czyzby.noise4j.map.generator.room.dungeon.DungeonGenerator
+import ru.spbau.maxim.model.Position
 import java.lang.Math.abs
 
 fun generateField(): FieldReadOnly<Cell> {
@@ -34,7 +35,7 @@ fun generateField(): FieldReadOnly<Cell> {
     }
 
     return object : FieldReadOnly<Cell> {
-        override fun get(i: Int, j: Int): Cell = arr[i][j]
+        override fun get(position: Position): Cell = arr[position.i][position.j]
         override val width = n
         override val height: Int = m
     }
