@@ -1,5 +1,5 @@
 package ru.spbau.maxim.model.Artifacts
 
-import ru.spbau.maxim.controller.effects.Effect
+import ru.spbau.maxim.effects.Effect
 
 class Artifact(val effect: Effect, val name: String)

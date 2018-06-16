@@ -7,12 +7,10 @@ import com.github.czyzby.noise4j.map.generator.room.dungeon.DungeonGenerator
 import ru.spbau.maxim.model.Position
 import java.lang.Math.abs
 
-fun generateField(): FieldReadOnly<Cell> {
-    val n = 512
-    val m = n
+fun generateField(n: Int, m: Int): FieldReadOnly<Cell> {
     val arr = Array(n, {Array<Cell>(m, { Cell.WALL})})
 
-    val grid = Grid(512)
+    val grid = Grid(n, m)
     val dungeonGenerator = DungeonGenerator()
     dungeonGenerator.roomGenerationAttempts = 500
     dungeonGenerator.maxRoomSize = 75

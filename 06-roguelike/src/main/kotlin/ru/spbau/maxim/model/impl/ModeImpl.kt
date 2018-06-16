@@ -1,8 +1,7 @@
 package ru.spbau.maxim.model.impl
 
-import ru.spbau.maxim.controller.effects.Effect
-import ru.spbau.maxim.mobs.Mob.Mob
 import ru.spbau.maxim.mobs.Mob.MobReadOnly
+import ru.spbau.maxim.model.Mob
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
@@ -10,7 +9,6 @@ import ru.spbau.maxim.model.field.FieldReadOnly
 
 class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: Mob, private val enemies: List<Mob>): Model {
     private val mobStorage = MobStorage(field)
-    private val effectStorage = EffectStorage()
     private var turns = 0
 
     init {
@@ -19,10 +17,8 @@ class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: Mob, priv
 
     override fun nextTurn() {
         turns += 1
-        effectStorage.cleanup(this)
     }
 
-    override fun applyEffects(mob: Mob) = effectStorage.applyEffects(mob, this)
 
     override fun time(): Int = turns
 
@@ -34,19 +30,15 @@ class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: Mob, priv
 
     override fun addMob(mob: Mob) = mobStorage.addMob(mob)
 
+    override fun removeMob(mob: Mob) = mobStorage.removeMob(mob)
+
     override fun getPlayer(): Mob = curPlayer
 
-    override fun updateMobPos(mob: Mob) = mobStorage.updateMobPosition(mob)
+    override fun updateMobPos(oldPos: Position) = mobStorage.updateMobPosition(oldPos)
 
     override fun getMobsReadOnly(): List<MobReadOnly> = getMobs()
 
     override fun getCell(position: Position): Cell = field.get(position)
-
-    override fun getEffects(mob: Mob): List<Effect> = effectStorage.getEffects(mob, this)
-
-    override fun addEffect(mob: Mob, effect: Effect) = effectStorage.addEffect(mob, effect)
-
-    override fun setEffects(mob: Mob, effects: List<Effect>) = effectStorage.setEffects(mob, effects)
 
     override fun getMobReadOnly(position: Position): MobReadOnly? = getMob(position)
 

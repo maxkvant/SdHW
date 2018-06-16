@@ -4,9 +4,8 @@ import ru.spbau.maxim.model.Position
 import kotlin.math.max
 import kotlin.math.min
 
-abstract class MobAbstract(val maxHp: Int, position: Position): Mob {
+abstract class MobAbstract(val maxHp: Int, private var pos: Position): Mob {
     private var hp: Int = maxHp
-    private var pos: Position = position
 
     override fun getHp() = hp
 
@@ -25,8 +24,9 @@ abstract class MobAbstract(val maxHp: Int, position: Position): Mob {
     }
 
     override fun moveTo(pos: Position, model: Model) {
+        val oldPos = this.pos
         this.pos = pos
-        model.updateMobPos(this)
+        model.updateMobPos(oldPos)
     }
 
     override fun getPosition(): Position {

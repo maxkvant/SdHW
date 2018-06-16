@@ -1,6 +1,6 @@
 package ru.spbau.maxim.mobs.Mob
 
-import ru.spbau.maxim.controller.actions.Action
+import ru.spbau.maxim.actions.Action
 import ru.spbau.maxim.model.Artifacts.ArtifactStorage
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.ModelReadOnly
@@ -15,5 +15,5 @@ interface Mob: MobReadOnly {
 
     fun moveTo(pos: Position, model: Model)
 
-    fun getArtifactsStorage(): ArtifactStorage
+    val artifactStorage: ArtifactStorage
 }

@@ -1,6 +1,6 @@
 package ru.spbau.maxim.model.impl
 
-import ru.spbau.maxim.mobs.Mob.Mob
+import ru.spbau.maxim.model.Mob
 import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.field.FieldReadOnly
@@ -12,15 +12,16 @@ class MobStorage(val field: FieldReadOnly<Cell>) {
     fun addMob(mob: Mob) {
         val pos = mob.getPosition()
         require(posMob[pos] == null)
-        updateMobPosition(mob)
+
+        posMob[mob.getPosition()] = mob
+        mobPos[mob] = pos
     }
 
-    fun updateMobPosition(mob: Mob) {
-        val oldPos: Position? = mobPos[mob]
+    fun updateMobPosition(oldPos: Position) {
+        val mob: Mob = posMob[oldPos]!!
         val pos = mob.getPosition()
-        if (oldPos != null) {
-            posMob.remove(oldPos)
-        }
+
+        posMob.remove(oldPos)
         posMob[mob.getPosition()] = mob
         mobPos[mob] = pos
     }
@@ -31,11 +32,6 @@ class MobStorage(val field: FieldReadOnly<Cell>) {
 
     fun getMob(position: Position): Mob? {
         return posMob[position]
-    }
-
-    fun setMobs(mobs: List<Mob>) {
-        posMob.clear()
-        mobs.forEach { addMob(it) }
     }
 
     fun removeMob(mob: Mob) {

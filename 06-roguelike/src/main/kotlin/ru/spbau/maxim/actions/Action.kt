@@ -1,4 +1,4 @@
-package ru.spbau.maxim.controller.actions
+package ru.spbau.maxim.actions
 
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.ModelReadOnly

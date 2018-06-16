@@ -31,4 +31,6 @@ class PlayerArtifactStorage: ArtifactStorage {
         currentArtifact = artifacts[index]
         return currentArtifact != null
     }
+
+    override fun getArtifacts(): List<Artifact> = artifacts.filterNotNull()
 }

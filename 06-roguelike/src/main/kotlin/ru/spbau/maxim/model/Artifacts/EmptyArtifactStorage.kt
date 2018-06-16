@@ -1,6 +1,8 @@
 package ru.spbau.maxim.model.Artifacts
 
 class EmptyArtifactStorage: ArtifactStorage {
+    override fun getArtifacts(): List<Artifact> = listOf()
+
     override fun getCurrentArtifact(): Artifact? = null
 
     override fun tryAddArtifact(artifact: Artifact): Boolean = false
