@@ -7,11 +7,12 @@ import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.field.FieldReadOnly
 
-class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: Mob, private val enemies: List<Mob>): Model {
+class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: Mob, enemies: List<Mob>): Model {
     private val mobStorage = MobStorage(field)
     private var turns = 0
 
     init {
+        enemies.forEach { mobStorage.addMob(it) }
         mobStorage.addMob(curPlayer)
     }
 

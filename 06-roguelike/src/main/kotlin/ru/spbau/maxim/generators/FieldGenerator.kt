@@ -13,15 +13,15 @@ fun generateField(n: Int, m: Int): FieldReadOnly<Cell> {
     val grid = Grid(n, m)
     val dungeonGenerator = DungeonGenerator()
     dungeonGenerator.roomGenerationAttempts = 500
-    dungeonGenerator.maxRoomSize = 75
-    dungeonGenerator.tolerance = 10 // Max difference between width and height.
+    dungeonGenerator.maxRoomSize = 27
+    dungeonGenerator.tolerance = 10 // Max difference between columns and rows.
     dungeonGenerator.minRoomSize = 9
     dungeonGenerator.generate(grid)
 
     val eps = 1e-3
 
     for (i in arr.indices) {
-        for (j in arr.indices) {
+        for (j in arr[i].indices) {
             val color = grid[i, j]
             arr[i][j] = when {
                 abs(color - 0.5) < eps -> Cell.SPACE
@@ -29,12 +29,11 @@ fun generateField(n: Int, m: Int): FieldReadOnly<Cell> {
                 else -> Cell.WALL
             }
         }
-        println()
     }
 
     return object : FieldReadOnly<Cell> {
         override fun get(position: Position): Cell = arr[position.i][position.j]
-        override val width = n
-        override val height: Int = m
+        override val rows = n
+        override val columns: Int = m
     }
 }

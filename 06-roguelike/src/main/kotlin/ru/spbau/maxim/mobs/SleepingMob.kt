@@ -9,8 +9,8 @@ import ru.spbau.maxim.actions.Action
 import ru.spbau.maxim.model.Artifacts.ArtifactStorage
 import ru.spbau.maxim.model.Artifacts.EmptyArtifactStorage
 
-class SleepingMob(position: Position) : MobAbstract(maxHp = 100, pos = position) {
-    override val artifactStorage = EmptyArtifactStorage()
+open class SleepingMob(position: Position) : MobAbstract(maxHp = 100, pos = position) {
+    override val artifactStorage: ArtifactStorage = EmptyArtifactStorage()
 
     override val type: MobType
         get() = MobType.ENEMY

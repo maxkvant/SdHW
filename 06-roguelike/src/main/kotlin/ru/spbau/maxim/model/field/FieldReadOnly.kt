@@ -4,6 +4,6 @@ import ru.spbau.maxim.model.Position
 
 interface FieldReadOnly<out T> {
     operator fun get(position: Position): T
-    val height: Int
-    val width: Int
+    val rows: Int
+    val columns: Int
 }

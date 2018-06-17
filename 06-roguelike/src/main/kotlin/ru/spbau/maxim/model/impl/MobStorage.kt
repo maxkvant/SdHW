@@ -18,12 +18,13 @@ class MobStorage(val field: FieldReadOnly<Cell>) {
     }
 
     fun updateMobPosition(oldPos: Position) {
-        val mob: Mob = posMob[oldPos]!!
-        val pos = mob.getPosition()
-
-        posMob.remove(oldPos)
-        posMob[mob.getPosition()] = mob
-        mobPos[mob] = pos
+        val mob: Mob? = posMob[oldPos]
+        if (mob != null) {
+            val pos = mob.getPosition()
+            posMob.remove(oldPos)
+            posMob[mob.getPosition()] = mob
+            mobPos[mob] = pos
+        }
     }
 
     fun getMobs(): List<Mob> {

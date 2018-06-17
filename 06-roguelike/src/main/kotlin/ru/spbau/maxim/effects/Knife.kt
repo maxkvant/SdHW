@@ -1,8 +1,8 @@
 package ru.spbau.maxim.effects
 
-import ru.spbau.maxim.effects.Effect
+import ru.spbau.maxim.mobs.Mob.EffectAbstract
 
-class Knife: Effect() {
+class Knife: EffectAbstract() {
     override val attack: Int
         get() = super.attack + 10
 }
