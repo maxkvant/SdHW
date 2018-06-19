@@ -1,10 +1,10 @@
 package ru.spbau.maxim.controller
 
-import com.sun.xml.internal.ws.api.policy.ModelGenerator
-import ru.spbau.maxim.mobs.Mob.Mob
+import ru.spbau.maxim.mobs.Mob.MobWithEffects
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.view.GameView
 import ru.spbau.maxim.actions.Action
+import ru.spbau.maxim.actions.HitAction
 
 class GameController(modelGenerator: () -> Model, private val view: GameView) {
     var model: Model = modelGenerator.invoke()
@@ -25,9 +25,26 @@ class GameController(modelGenerator: () -> Model, private val view: GameView) {
             }
 
             val mobs = model.getMobs()
-            val actions = mobs.map { it.turn(model) }
-            val validActions = actions.filter { it.validate(model) }
-            validActions.forEach { it.executeIfValid(model) }
+            val mobActions: List<Pair<MobWithEffects, Action>> = mobs.map { mob -> Pair(mob, mob.turn(model)) }
+
+            val validActions = mobActions.filter { (mob, action) -> action.validate(mob, model) }
+
+            validActions.forEach { (mob, action) ->
+                when (action) {
+                    is HitAction -> {
+                        val deadBefore = action.victim.isDead()
+                        action.executeIfValid(mob, model)
+                        val deadAfter = action.victim.isDead()
+                        if (!deadAfter && deadBefore) {
+                            val victimArtifacts = action.victim.artifactStorage.getArtifacts().shuffled()
+                            victimArtifacts.forEach { artifact ->
+                                mob.artifactStorage.tryAddArtifact(artifact)
+                            }
+                        }
+                    }
+                    else -> action.executeIfValid(mob, model)
+                }
+            }
         }
     }
 }
