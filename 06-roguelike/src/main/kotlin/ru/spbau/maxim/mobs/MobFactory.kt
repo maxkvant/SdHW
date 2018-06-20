@@ -90,7 +90,6 @@ class MobFactory {
                     } else {
                         Position(myPos.i, myPos.j + dj)
                     }
-                    println("di=${di} dj=${dj} ")
                     return Move(this, posTo)
                 }
                 else -> {
