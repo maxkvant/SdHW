@@ -1,5 +1,7 @@
 package ru.spbau.maxim.model
 
+import ru.spbau.maxim.mobs.PlayerMobWithEffects
+
 interface Model: ModelReadOnly {
     fun getMobs(): List<Mob>
 
@@ -9,10 +11,10 @@ interface Model: ModelReadOnly {
 
     fun removeMob(mob: Mob)
 
-    fun getPlayer(): Mob
+    fun getPlayer(): PlayerMobWithEffects
 
     fun updateMobPos(oldPos: Position)
 
-    fun nextTurn()
+    fun nextTurn(f: Model.() -> Unit)
 }
 

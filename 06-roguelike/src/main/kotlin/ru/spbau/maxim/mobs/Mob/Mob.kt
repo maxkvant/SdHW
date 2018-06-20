@@ -1,7 +1,7 @@
 package ru.spbau.maxim.mobs.Mob
 
-import ru.spbau.maxim.actions.Action
-import ru.spbau.maxim.model.Artifacts.ArtifactStorage
+import ru.spbau.maxim.mobs.actions.Action
+import ru.spbau.maxim.mobs.artifacts.ArtifactStorage
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position

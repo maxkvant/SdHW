@@ -36,4 +36,8 @@ abstract class MobAbstract(val maxHp: Int, private var pos: Position): Mob {
     private fun normalizeHp() {
         hp = max(0, min(hp, maxHp))
     }
+
+    override fun toString(): String {
+        return getPosition().toString()
+    }
 }

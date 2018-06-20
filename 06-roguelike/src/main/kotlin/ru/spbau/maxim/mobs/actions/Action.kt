@@ -1,4 +1,4 @@
-package ru.spbau.maxim.actions
+package ru.spbau.maxim.mobs.actions
 
 import ru.spbau.maxim.mobs.Mob.MobWithEffects
 import ru.spbau.maxim.model.Model

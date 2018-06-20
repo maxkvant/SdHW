@@ -1,4 +1,4 @@
-package ru.spbau.maxim.generators
+package ru.spbau.maxim.model.generators
 
 import com.github.czyzby.noise4j.map.Grid
 import ru.spbau.maxim.model.field.Cell

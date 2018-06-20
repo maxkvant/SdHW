@@ -1,4 +1,4 @@
-package ru.spbau.maxim.model.Artifacts
+package ru.spbau.maxim.mobs.artifacts
 
 class OneArtifactStorage(private val artifact: Artifact): ArtifactStorage {
     override fun getArtifacts(): List<Artifact> = listOf(artifact)

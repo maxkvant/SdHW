@@ -1,6 +1,4 @@
-package ru.spbau.maxim.effects
-
-import ru.spbau.maxim.mobs.Mob.EffectAbstract
+package ru.spbau.maxim.mobs.effects
 
 class Helmet: EffectAbstract() {
     override val defence: Int

@@ -1,9 +1,8 @@
-package ru.spbau.maxim.effects
+package ru.spbau.maxim.mobs.effects
 
-import ru.spbau.maxim.actions.Action
-import ru.spbau.maxim.actions.FreezeSibling
-import ru.spbau.maxim.actions.HitAction
-import ru.spbau.maxim.mobs.Mob.EffectAbstract
+import ru.spbau.maxim.mobs.actions.Action
+import ru.spbau.maxim.mobs.actions.FreezeSibling
+import ru.spbau.maxim.mobs.actions.HitAction
 import ru.spbau.maxim.model.ModelReadOnly
 import java.util.*
 

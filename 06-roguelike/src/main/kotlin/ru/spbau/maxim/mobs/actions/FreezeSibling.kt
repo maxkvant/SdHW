@@ -1,7 +1,8 @@
-package ru.spbau.maxim.actions
+package ru.spbau.maxim.mobs.actions
 
-import ru.spbau.maxim.effects.Freezer
-import ru.spbau.maxim.effects.Frozen
+import ru.spbau.maxim.mobs.Mob.MobReadOnly
+import ru.spbau.maxim.mobs.effects.Freezer
+import ru.spbau.maxim.mobs.effects.Frozen
 import ru.spbau.maxim.mobs.Mob.MobWithEffects
 import ru.spbau.maxim.model.Mob
 import ru.spbau.maxim.model.Model
@@ -9,7 +10,7 @@ import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
 import java.util.*
 
-class FreezeSibling(val causeOldPos: Position, override val victim: Mob): HitAction {
+class FreezeSibling(val causeOldPos: Position, override val victim: MobWithEffects): HitAction {
     private val victimOldPos = victim.getPosition()
 
     override fun validate(author: MobWithEffects, model: ModelReadOnly): Boolean {

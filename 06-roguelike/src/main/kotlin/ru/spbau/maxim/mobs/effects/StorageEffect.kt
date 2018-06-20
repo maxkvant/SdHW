@@ -1,9 +1,7 @@
-package ru.spbau.maxim.effects
+package ru.spbau.maxim.mobs.effects
 
-import ru.spbau.maxim.mobs.Mob.Effect
-import ru.spbau.maxim.mobs.Mob.EffectAbstract
 import ru.spbau.maxim.mobs.Mob.Mob
-import ru.spbau.maxim.model.Artifacts.Artifact
+import ru.spbau.maxim.mobs.artifacts.Artifact
 
 class StorageEffect: EffectAbstract() {
     override fun getInnerMob(): Mob {

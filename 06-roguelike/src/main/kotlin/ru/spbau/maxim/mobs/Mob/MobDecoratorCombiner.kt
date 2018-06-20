@@ -3,7 +3,7 @@ package ru.spbau.maxim.mobs.Mob
 import ru.spbau.maxim.model.ModelReadOnly
 import kotlin.reflect.KClass
 
-class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), MobWithEffects {
+open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), MobWithEffects {
     private val decorators: MutableList<Node> = mutableListOf()
     private var curMob = mob
 
@@ -33,5 +33,9 @@ class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), MobWit
 
     override fun hasSuch(decoratorClass: KClass<out MobDecoratorMutable>): Boolean {
         return decorators.any { (decorator, _) -> decoratorClass.java.isInstance(decorator) }
+    }
+
+    override fun toString(): String {
+        return getPosition().toString()
     }
 }

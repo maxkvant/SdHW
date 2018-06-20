@@ -1,14 +1,13 @@
-package ru.spbau.maxim.actions
+package ru.spbau.maxim.mobs.actions
 
-import ru.spbau.maxim.actions.Action
+import ru.spbau.maxim.mobs.Mob.Mob
 import ru.spbau.maxim.mobs.Mob.MobWithEffects
-import ru.spbau.maxim.model.Mob
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
 import kotlin.math.max
 
-class HitSibling(private val causeOldPos: Position, override val victim: Mob): HitAction {
+class HitSibling(private val causeOldPos: Position, override val victim: MobWithEffects): HitAction {
     private val victimOldPos = victim.getPosition()
 
     override fun validate(author: MobWithEffects, model: ModelReadOnly): Boolean {
@@ -16,7 +15,8 @@ class HitSibling(private val causeOldPos: Position, override val victim: Mob): H
     }
 
     override fun execute(author: MobWithEffects, model: Model) {
-        val hp = max(0, model.getMob(causeOldPos)!!.attack - victim.defence)
-        victim.decreaseHp(hp)
+        val hp = max(0, author.attack - victim.defence)
+        (victim as Mob).decreaseHp(hp)
+        println()
     }
 }

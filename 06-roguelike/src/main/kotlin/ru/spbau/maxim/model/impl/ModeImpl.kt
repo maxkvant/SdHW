@@ -1,13 +1,15 @@
 package ru.spbau.maxim.model.impl
 
 import ru.spbau.maxim.mobs.Mob.MobReadOnly
+import ru.spbau.maxim.mobs.PlayerMob
+import ru.spbau.maxim.mobs.PlayerMobWithEffects
 import ru.spbau.maxim.model.Mob
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.field.FieldReadOnly
 
-class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: Mob, enemies: List<Mob>): Model {
+class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: PlayerMobWithEffects, enemies: List<Mob>): Model {
     private val mobStorage = MobStorage(field)
     private var turns = 0
 
@@ -16,7 +18,9 @@ class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: Mob, enem
         mobStorage.addMob(curPlayer)
     }
 
-    override fun nextTurn() {
+    override fun nextTurn(f: Model.() -> Unit) {
+        f()
+        getMobs().forEach { updateMobPos(it.getPosition()) }
         turns += 1
     }
 
@@ -33,7 +37,7 @@ class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: Mob, enem
 
     override fun removeMob(mob: Mob) = mobStorage.removeMob(mob)
 
-    override fun getPlayer(): Mob = curPlayer
+    override fun getPlayer(): PlayerMobWithEffects = curPlayer
 
     override fun updateMobPos(oldPos: Position) = mobStorage.updateMobPosition(oldPos)
 

@@ -1,6 +1,6 @@
 package ru.spbau.maxim.mobs.Mob
 
-import ru.spbau.maxim.model.Artifacts.ArtifactStorage
+import ru.spbau.maxim.mobs.artifacts.ArtifactStorage
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
@@ -11,9 +11,6 @@ abstract class MobDecoratorAbstract: MobDecorator {
 
     override val defence: Int
             get() = getInnerMob().defence
-
-    override val type: MobType
-        get() = getInnerMob().type
 
     override val artifactStorage: ArtifactStorage
         get() = getInnerMob().artifactStorage
@@ -31,5 +28,4 @@ abstract class MobDecoratorAbstract: MobDecorator {
     override fun moveTo(pos: Position, model: Model) = getInnerMob().moveTo(pos, model)
 
     override fun getPosition(): Position = getInnerMob().getPosition()
-
 }
