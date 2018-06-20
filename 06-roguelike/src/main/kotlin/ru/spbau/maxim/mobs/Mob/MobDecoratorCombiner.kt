@@ -41,7 +41,7 @@ open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), M
             curMobReady = false
         }
 
-        if (curMobReady) {
+        if (!curMobReady) {
             var newMob = mob
             decorators.forEach { (decorator, _) ->
                 decorator.setMob(newMob)
