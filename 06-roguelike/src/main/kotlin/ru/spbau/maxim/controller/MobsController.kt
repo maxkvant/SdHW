@@ -8,7 +8,11 @@ import ru.spbau.maxim.mobs.actions.Action
 import ru.spbau.maxim.mobs.actions.HitAction
 import ru.spbau.maxim.model.Model
 
-class PlayerMobController(private val model: Model): SubController {
+/**
+ * Reacts to player moves/attacks, executes other mobs actions on each turn
+ * @see SubController
+ */
+class MobsController(private val model: Model): SubController {
     override fun onAction(input: Input): Boolean {
         if (input.isKeyStroke()) {
             val keyStroke = input.asKeyStroke()

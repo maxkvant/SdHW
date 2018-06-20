@@ -5,6 +5,10 @@ import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.view.GameView
 import ru.spbau.maxim.view.GameView.*
 
+/**
+ * Runs game in view
+ * when player dies new model generates by modelGenerator
+ */
 class GameController(modelGenerator: () -> Model, private val view: GameView) {
     private var subControllers = SubControllers(modelGenerator())
 
@@ -40,7 +44,7 @@ class GameController(modelGenerator: () -> Model, private val view: GameView) {
     }
 
     private class SubControllers(val model: Model) {
-        val mobController = PlayerMobController(model)
+        val mobController = MobsController(model)
         val artifactController = ArtifactStorageController(model)
     }
 }

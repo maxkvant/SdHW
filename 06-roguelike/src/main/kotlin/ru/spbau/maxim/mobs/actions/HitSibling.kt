@@ -7,6 +7,9 @@ import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
 import kotlin.math.max
 
+/**
+ * Hits sibling, decreases it's hp by max(0, attack - victim.defence)
+ */
 class HitSibling(private val causeOldPos: Position, override val victim: MobWithEffects): HitAction {
     private val victimOldPos = victim.getPosition()
 

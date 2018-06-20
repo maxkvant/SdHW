@@ -5,7 +5,10 @@ import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
 
-abstract class MobDecoratorAbstract: MobDecorator {
+/**
+ * Implements decorator pattern for Mob
+ */
+abstract class MobDecoratorImpl: MobDecorator {
     override val attack: Int
             get() = getInnerMob().attack
 
@@ -15,17 +18,15 @@ abstract class MobDecoratorAbstract: MobDecorator {
     override val artifactStorage: ArtifactStorage
         get() = getInnerMob().artifactStorage
 
-    override fun getHp(): Int = getInnerMob().getHp()
-
     override fun turn(env: Model) = getInnerMob().turn(env)
+
+    final override fun getHp(): Int = getInnerMob().getHp()
 
     override fun decreaseHp(attack: Int) = getInnerMob().decreaseHp(attack)
 
     override fun increaseHp(heal: Int) = getInnerMob().increaseHp(heal)
 
-    override fun isDead(): Boolean = getInnerMob().isDead()
+    final override fun moveTo(posTo: Position, model: Model) = getInnerMob().moveTo(posTo, model)
 
-    override fun moveTo(pos: Position, model: Model) = getInnerMob().moveTo(pos, model)
-
-    override fun getPosition(): Position = getInnerMob().getPosition()
+    final override fun getPosition(): Position = getInnerMob().getPosition()
 }

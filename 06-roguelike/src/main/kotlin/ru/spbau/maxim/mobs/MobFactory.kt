@@ -15,12 +15,15 @@ import ru.spbau.maxim.mobs.PlayerMob.*
 import ru.spbau.maxim.mobs.artifacts.*
 import ru.spbau.maxim.model.Model
 
+/**
+ * Contains that can create
+ */
 class MobFactory {
     private val enemyHp: Int = 40
     private val playerHp = 100
 
     fun sleepingMob(position: Position): MobWithEffects {
-        val artifactStorage = EmptyArtifactStorage()
+        val artifactStorage = EmptyArtifactStorage
         val baseMob = SleepingMob(enemyHp, position, artifactStorage)
         return MobDecoratorCombiner(baseMob)
     }
@@ -32,7 +35,7 @@ class MobFactory {
     }
 
     fun enemyNoArtifacts(position: Position): MobWithEffects {
-        val artifactStorage = EmptyArtifactStorage()
+        val artifactStorage = EmptyArtifactStorage
         val baseMob = Enemy(enemyHp, position, artifactStorage)
         return MobDecoratorCombiner(baseMob)
     }

@@ -1,6 +1,9 @@
 package ru.spbau.maxim.mobs.Mob
 
-open class MobDecoratorMutaAbstract: MobDecoratorAbstract(), MobDecoratorMutable {
+/**
+ * Implements MobDecoratorMutable
+ */
+abstract class MobDecoratorMutableImpl: MobDecoratorImpl(), MobDecoratorMutable {
     private var mob: Mob? = null
 
     override fun getInnerMob(): Mob = mob!!

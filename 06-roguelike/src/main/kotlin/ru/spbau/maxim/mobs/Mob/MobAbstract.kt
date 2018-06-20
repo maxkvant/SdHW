@@ -4,6 +4,10 @@ import ru.spbau.maxim.model.Position
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * Abstract class for Mob,
+ * Implements it's hp ad position changes
+ */
 abstract class MobAbstract(val maxHp: Int, private var pos: Position): Mob {
     private var hp: Int = maxHp
 
@@ -19,13 +23,9 @@ abstract class MobAbstract(val maxHp: Int, private var pos: Position): Mob {
         normalizeHp()
     }
 
-    override fun isDead(): Boolean {
-        return hp == 0
-    }
-
-    override fun moveTo(pos: Position, model: Model) {
+    override fun moveTo(posTo: Position, model: Model) {
         val oldPos = this.pos
-        this.pos = pos
+        this.pos = posTo
         model.updateMobPos(oldPos)
     }
 

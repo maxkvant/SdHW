@@ -15,6 +15,9 @@ import ru.spbau.maxim.view.layers.InfoLayer
 import ru.spbau.maxim.view.layers.TerminalLayer
 import java.util.function.Consumer
 
+/**
+ * Implementation of GameView in terminal (using terminal for zircon lib)
+ */
 class GameViewIml(width: Int, height: Int): GameView {
     private val inputListeners: MutableList<InputListener> = mutableListOf()
     private val size = Size.of(width, height)

@@ -16,6 +16,10 @@ import ru.spbau.maxim.model.field.FieldReadOnly
 import java.util.*
 import kotlin.math.roundToInt
 
+/**
+ * Puts mobs of field
+ * density is fraction mobs in space cells of field
+ */
 fun generateMobs(field: FieldReadOnly<Cell>, density: Double): Pair<PlayerMobWithEffects, List<MobWithEffects>> {
     val factory = MobFactory()
 

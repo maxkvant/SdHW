@@ -2,11 +2,13 @@ package ru.spbau.maxim.view.layers
 
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.Size
-import org.codetome.zircon.api.builder.LayerBuilder
 import org.codetome.zircon.api.graphics.Layer
 import org.codetome.zircon.api.terminal.Terminal
 import ru.spbau.maxim.model.ModelReadOnly
 
+/**
+ * Layer for player's artifacts
+ */
 class ArtifactsLayer(
         override val size: Size,
         override val offset: org.codetome.zircon.api.Position,
@@ -14,7 +16,7 @@ class ArtifactsLayer(
 ) : TerminalLayer {
 
     override fun draw(model: ModelReadOnly) {
-        val layer = buildLayer()
+        val layer = buildBaseLayer()
         drawArtifacts(layer, model)
         terminal.pushLayer(layer)
     }

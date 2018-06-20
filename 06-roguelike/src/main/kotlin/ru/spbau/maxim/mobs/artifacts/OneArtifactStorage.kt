@@ -1,5 +1,8 @@
 package ru.spbau.maxim.mobs.artifacts
 
+/**
+ * Stores One artifact, is immutable
+ */
 class OneArtifactStorage(private val artifact: Artifact): ArtifactStorage {
     override val capacity = 1
 

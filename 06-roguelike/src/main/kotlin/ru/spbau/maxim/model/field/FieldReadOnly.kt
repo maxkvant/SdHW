@@ -2,6 +2,9 @@ package ru.spbau.maxim.model.field
 
 import ru.spbau.maxim.model.Position
 
+/**
+ * 2D immutable Grid, with left top conner (0, 0)
+ */
 interface FieldReadOnly<out T> {
     operator fun get(position: Position): T
     val rows: Int

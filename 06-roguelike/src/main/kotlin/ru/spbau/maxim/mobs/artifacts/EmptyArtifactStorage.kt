@@ -1,6 +1,9 @@
 package ru.spbau.maxim.mobs.artifacts
 
-class EmptyArtifactStorage: ArtifactStorage {
+/**
+ * ArtifactStorage, that stores nothing, and can't be changed
+ */
+object EmptyArtifactStorage: ArtifactStorage {
     override val capacity: Int
         get() = 0
 

@@ -1,5 +1,8 @@
 package ru.spbau.maxim.mobs.artifacts
 
+/**
+ * Stores player artifacts, is mutable
+ */
 class PlayerArtifactStorage: ArtifactStorage {
     override val capacity = 4
 

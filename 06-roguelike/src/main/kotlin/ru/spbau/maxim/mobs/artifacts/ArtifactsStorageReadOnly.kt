@@ -1,5 +1,8 @@
 package ru.spbau.maxim.mobs.artifacts
 
+/**
+ * Interface for read only version of ArtifactStorage
+ */
 interface ArtifactsStorageReadOnly {
     fun getCurrentArtifact(): Artifact? {
         val i = getCurrentArtifactI()

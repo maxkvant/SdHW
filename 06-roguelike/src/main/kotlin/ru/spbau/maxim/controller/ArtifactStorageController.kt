@@ -2,12 +2,12 @@ package ru.spbau.maxim.controller
 
 import org.codetome.zircon.api.input.Input
 import org.codetome.zircon.api.input.InputType
-import ru.spbau.maxim.mobs.Mob.MobWithEffects
-import ru.spbau.maxim.mobs.PlayerMob
-import ru.spbau.maxim.mobs.actions.Action
-import ru.spbau.maxim.mobs.actions.HitAction
 import ru.spbau.maxim.model.Model
 
+/**
+ * chooses/removes player's artifacts, on player actions
+ * @see SubController
+ */
 class ArtifactStorageController(private val model: Model): SubController {
     override fun onAction(input: Input): Boolean {
         if (input.isKeyStroke()) {
@@ -27,13 +27,9 @@ class ArtifactStorageController(private val model: Model): SubController {
                     val c = keyStroke.getCharacter()
                     if (c.isDigit()) {
                         val i = c.toString().toInt()
-                        println(artifactStorage.capacity)
                         if (0 < i && i <= artifactStorage.capacity) {
-                            println(i)
                             artifactStorage.choseArtifact(i - 1)
                         }
-                        println(artifactStorage.getCurrentArtifactI())
-                        println()
                     }
                     return true
                 }

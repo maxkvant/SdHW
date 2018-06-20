@@ -7,6 +7,9 @@ import com.github.czyzby.noise4j.map.generator.room.dungeon.DungeonGenerator
 import ru.spbau.maxim.model.Position
 import java.lang.Math.abs
 
+/**
+ * Generates dungeon field with n rows, m columns
+ */
 fun generateField(n: Int, m: Int): FieldReadOnly<Cell> {
     val arr = Array(n, {Array<Cell>(m, { Cell.WALL})})
 

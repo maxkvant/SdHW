@@ -3,6 +3,9 @@ package ru.spbau.maxim.mobs.effects
 import ru.spbau.maxim.mobs.Mob.Mob
 import ru.spbau.maxim.mobs.artifacts.Artifact
 
+/**
+ * Effect of having some artifacts
+ */
 class StorageEffect: EffectAbstract() {
     override fun getInnerMob(): Mob {
         val prevMob: Mob = super.getInnerMob()

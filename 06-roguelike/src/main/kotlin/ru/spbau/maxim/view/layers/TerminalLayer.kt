@@ -7,6 +7,9 @@ import org.codetome.zircon.api.graphics.Layer
 import org.codetome.zircon.api.terminal.Terminal
 import ru.spbau.maxim.model.ModelReadOnly
 
+/**
+ * Interface for layer of terminal, that represents part of screen, with top left coner offset
+ */
 interface TerminalLayer {
     val size: Size
 
@@ -14,15 +17,18 @@ interface TerminalLayer {
 
     val terminal: Terminal
 
+    /**
+     * draw it in terminal, but not to flush
+     */
     fun draw(model: ModelReadOnly)
 
-    fun buildLayer(): Layer = LayerBuilder.newBuilder()
+    fun buildBaseLayer(): Layer = LayerBuilder.newBuilder()
                 .size(size)
                 .offset(offset)
                 .build()
 
     fun clear() {
-        val layer = buildLayer()
+        val layer = buildBaseLayer()
         clearBoard(size, layer)
         terminal.pushLayer(layer)
     }

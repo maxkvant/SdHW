@@ -6,19 +6,23 @@ import ru.spbau.maxim.mobs.Mob.MobWithEffects
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
-import java.util.*
 
-class FreezeSibling(private val causeOldPos: Position, override val victim: MobWithEffects): HitAction {
+/**
+ * Freezes victim if not Frozen, otherwise runs causeAction
+ */
+class FreezeSibling(private val causeOldPos: Position, override val victim: MobWithEffects, val causeAction: Action): HitAction {
     private val victimOldPos = victim.getPosition()
 
     override fun validate(author: MobWithEffects, model: ModelReadOnly): Boolean {
-        return super.validate(author, model) && causeOldPos.dist(victimOldPos) == 1
+        return super.validate(author, model) && causeAction.validate(author, model) && causeOldPos.dist(victimOldPos) == 1
     }
 
     override fun execute(author: MobWithEffects, model: Model) {
-        if (!victim.hasSuch(Freezer::class) && Random().nextBoolean()) {
+        if (!victim.hasDecorator(Freezer::class)) {
             val effect = Frozen()
             victim.addDecorator(effect, effect.timeToLive, model)
+        } else {
+            causeAction.execute(author, model)
         }
     }
 }

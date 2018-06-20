@@ -1,12 +1,15 @@
 package ru.spbau.maxim.view.layers
 
-import jdk.nashorn.internal.ir.Terminal
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.Size
-import org.codetome.zircon.api.builder.LayerBuilder
 import org.codetome.zircon.api.graphics.Layer
 import ru.spbau.maxim.model.ModelReadOnly
 
+/**
+ * layer of information about player:
+ * his hp, attack, defence,
+ * how many turns have he done
+ */
 class InfoLayer(
         override val size: Size,
         override val offset: org.codetome.zircon.api.Position,
@@ -14,7 +17,7 @@ class InfoLayer(
 ) : TerminalLayer {
 
     override fun draw(model: ModelReadOnly) {
-        val layer = buildLayer()
+        val layer = buildBaseLayer()
         drawInfo(layer, model)
         terminal.pushLayer(layer)
     }
@@ -24,7 +27,7 @@ class InfoLayer(
 
         val messages = listOf(
                 "hp: ${player.getHp()}",
-                "turns: ${model.time()}",
+                "turns: ${model.turns()}",
                 "attack: ${player.attack}",
                 "defence: ${player.defence}", "-----"
         )

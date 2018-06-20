@@ -8,6 +8,9 @@ import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.field.FieldReadOnly
 
+/**
+ * implements Model
+ */
 class ModelImpl(private val field: FieldReadOnly<Cell>, private val curPlayer: PlayerMobWithEffects, enemies: List<MobWithEffects>): Model {
     private val mobStorage = MobStorage(field)
     private var turns = 0
@@ -27,7 +30,7 @@ class ModelImpl(private val field: FieldReadOnly<Cell>, private val curPlayer: P
         }
     }
 
-    override fun time(): Int = turns
+    override fun turns(): Int = turns
 
     override fun finished(): Boolean = getPlayer().isDead()
 
@@ -35,9 +38,9 @@ class ModelImpl(private val field: FieldReadOnly<Cell>, private val curPlayer: P
 
     override fun getMob(pos: Position): MobWithEffects? = mobStorage.getMob(pos)
 
-    override fun addMob(mobWithEffects: MobWithEffects) = mobStorage.addMob(mobWithEffects)
+    override fun addMob(mob: MobWithEffects) = mobStorage.addMob(mob)
 
-    override fun removeMob(mobWithEffects: MobWithEffects) = mobStorage.removeMob(mobWithEffects)
+    override fun removeMob(mob: MobWithEffects) = mobStorage.removeMob(mob)
 
     override fun getPlayer(): PlayerMobWithEffects = curPlayer
 

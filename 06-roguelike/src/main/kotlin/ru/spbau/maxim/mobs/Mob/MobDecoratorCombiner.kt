@@ -6,7 +6,10 @@ import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.ModelReadOnly
 import kotlin.reflect.KClass
 
-open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), MobWithEffects {
+/**
+ * Implementation of MobWithEffects, MobDecoratorImpl
+ */
+open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorImpl(), MobWithEffects {
     private val decorators: MutableList<Node> = mutableListOf()
     private var curMob = mob
     private var curMobReady = true
@@ -24,8 +27,8 @@ open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), M
         return curMob
     }
 
-    final override fun addDecorator(decorator: MobDecoratorMutable, timeToLive: Int, model: ModelReadOnly) {
-        decorators.add(Node(decorator, timeToLive + model.time()))
+    final override fun addDecorator(decorator: MobDecoratorMutable, timeActive: Int, model: ModelReadOnly) {
+        decorators.add(Node(decorator, timeActive + model.turns()))
         curMobReady = false
     }
 
@@ -34,9 +37,13 @@ open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), M
         curMobReady = false
     }
 
-    final override fun onNewTurn(model: ModelReadOnly) {
+    final override fun hasDecorator(decoratorClass: KClass<out MobDecoratorMutable>): Boolean {
+        return decorators.any { (decorator, _) -> decoratorClass.java.isInstance(decorator) }
+    }
+
+    private fun onNewTurn(model: ModelReadOnly) {
         val sizeBefore = decorators.size
-        decorators.removeIf { it.timeToRemove != null && it.timeToRemove < model.time() }
+        decorators.removeIf { it.timeToRemove != null && it.timeToRemove < model.turns() }
         if (sizeBefore != decorators.size) {
             curMobReady = false
         }
@@ -50,10 +57,6 @@ open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), M
             curMob = newMob
         }
         curMobReady = true
-    }
-
-    final override fun hasSuch(decoratorClass: KClass<out MobDecoratorMutable>): Boolean {
-        return decorators.any { (decorator, _) -> decoratorClass.java.isInstance(decorator) }
     }
 
     private data class Node(val mobDecoratorAbstract: MobDecoratorMutable, val timeToRemove: Int?)

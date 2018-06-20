@@ -1,13 +1,15 @@
 package ru.spbau.maxim.view.layers
 
 import org.codetome.zircon.api.Size
-import org.codetome.zircon.api.builder.LayerBuilder
 import org.codetome.zircon.api.graphics.Layer
 import org.codetome.zircon.api.terminal.Terminal
 import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 
+/**
+ * Layer for part of field near player: field cells, other mobs (&), player (@)
+ */
 class FieldLayer(
         override val size: Size,
         override val offset: org.codetome.zircon.api.Position,
@@ -15,7 +17,7 @@ class FieldLayer(
 ) : TerminalLayer {
 
     override fun draw(model: ModelReadOnly) {
-        val layer= buildLayer()
+        val layer= buildBaseLayer()
         drawField(layer, model)
         terminal.pushLayer(layer)
     }

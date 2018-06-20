@@ -7,6 +7,9 @@ import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 
+/**
+ * moves Mob to posTo
+ */
 data class Move(private val mob: Mob, private val posTo: Position): Action {
     override fun validate(author: MobWithEffects, model: ModelReadOnly): Boolean {
         return model.getField().inside(posTo)
