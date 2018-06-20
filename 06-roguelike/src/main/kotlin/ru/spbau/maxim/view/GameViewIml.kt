@@ -18,7 +18,7 @@ class GameViewIml(private val width: Int, private val height: Int): GameView {
 
     private val terminal = TerminalBuilder
             .newBuilder()
-            .initialTerminalSize(Size.of(height, width))
+            .initialTerminalSize(Size.of(width, height))
             .font(CP437TilesetResource.WANDERLUST_16X16.toFont())
             .buildTerminal()
 
@@ -30,7 +30,6 @@ class GameViewIml(private val width: Int, private val height: Int): GameView {
         })
     }
 
-
     override fun addInputListener(listener: InputListener) {
         inputListeners.add(listener)
     }
@@ -40,7 +39,7 @@ class GameViewIml(private val width: Int, private val height: Int): GameView {
         val field = model.getField()
 
         val layer = LayerBuilder.newBuilder()
-                .size(Size(width, height))
+                .size(Size(width - 10, height))
                 .build()
 
 
@@ -49,7 +48,7 @@ class GameViewIml(private val width: Int, private val height: Int): GameView {
                 val fieldPos = Pos(playerPos.i + (row - height / 2), playerPos.j + (col - width / 2))
                 val c = if (field.inside(fieldPos)) {
                     when {
-                        fieldPos == playerPos -> '@'
+                        fieldPos == playerPos && !model.getPlayerReadOnly().isDead() -> '@'
                         model.getMobReadOnly(fieldPos) != null -> '&'
                         model.getCell(fieldPos) == Cell.WALL -> '#'
                         model.getCell(fieldPos) == Cell.SPACE -> '.'

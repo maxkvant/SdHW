@@ -1,5 +1,6 @@
 package ru.spbau.maxim.mobs.Mob
 
+import ru.spbau.maxim.mobs.actions.Action
 import ru.spbau.maxim.mobs.effects.StorageEffect
 import ru.spbau.maxim.model.ModelReadOnly
 import kotlin.reflect.KClass
@@ -10,6 +11,11 @@ open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), M
 
     init {
         addDecorator(StorageEffect())
+    }
+
+    final override fun turn(env: ModelReadOnly): Action {
+        onNewTurn(env)
+        return getInnerMob().turn(env)
     }
 
     final override fun getInnerMob(): Mob {

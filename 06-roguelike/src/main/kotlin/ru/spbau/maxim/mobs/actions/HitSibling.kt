@@ -17,6 +17,5 @@ class HitSibling(private val causeOldPos: Position, override val victim: MobWith
     override fun execute(author: MobWithEffects, model: Model) {
         val hp = max(0, author.attack - victim.defence)
         (victim as Mob).decreaseHp(hp)
-        println()
     }
 }

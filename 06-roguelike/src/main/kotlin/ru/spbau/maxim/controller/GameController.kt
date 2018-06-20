@@ -9,16 +9,12 @@ import ru.spbau.maxim.view.GameView
 import ru.spbau.maxim.mobs.actions.Action
 import ru.spbau.maxim.mobs.actions.HitAction
 import ru.spbau.maxim.mobs.actions.Rest
+import ru.spbau.maxim.mobs.effects.Frozen
 import ru.spbau.maxim.view.GameView.*
-import sun.print.DialogOwner
 
 class GameController(val model: Model, private val view: GameView) {
     init {
         view.draw(model)
-
-
-        println(model.getPlayer().getPosition())
-
         view.addInputListener(InputListener.of { input ->
             if (input.isKeyStroke()) {
                 val keyStroke = input.asKeyStroke()
@@ -34,11 +30,17 @@ class GameController(val model: Model, private val view: GameView) {
                 }
 
                 if (playerTurn != null) {
-                    model.getPlayer().setPlayerTurn(playerTurn)
-                    turn()
+                    val player = model.getPlayer()
+                    player.setPlayerTurn(playerTurn)
+
+                    if (player.turn(model).validate(player, model)) {
+                        turn()
+                    }
                 }
             }
         })
+        model.getPlayer().addDecorator(Frozen(), 3, model)
+
     }
 
     private fun turn() {
