@@ -1,6 +1,6 @@
 package ru.spbau.maxim.mobs.effects
 
-import ru.spbau.maxim.mobs.Mob.Mob
+import ru.spbau.maxim.mobs.mobCore.Mob
 import ru.spbau.maxim.mobs.artifacts.Artifact
 
 /**

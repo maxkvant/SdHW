@@ -2,7 +2,7 @@ package ru.spbau.maxim.mobs.actions
 
 import ru.spbau.maxim.mobs.effects.Freezer
 import ru.spbau.maxim.mobs.effects.Frozen
-import ru.spbau.maxim.mobs.Mob.MobWithEffects
+import ru.spbau.maxim.mobs.mobCore.MobWithEffects
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
@@ -10,7 +10,11 @@ import ru.spbau.maxim.model.Position
 /**
  * Freezes victim if not Frozen, otherwise runs causeAction
  */
-class FreezeSibling(private val causeOldPos: Position, override val victim: MobWithEffects, val causeAction: Action): HitAction {
+class FreezeSibling(
+        private val causeOldPos: Position,
+        override val victim: MobWithEffects,
+        private val causeAction: Action
+): HitAction {
     private val victimOldPos = victim.getPosition()
 
     override fun validate(author: MobWithEffects, model: ModelReadOnly): Boolean {

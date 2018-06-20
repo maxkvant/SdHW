@@ -1,9 +1,9 @@
 package ru.spbau.maxim.mobs
 
-import ru.spbau.maxim.mobs.Mob.Mob
+import ru.spbau.maxim.mobs.mobCore.Mob
 
 /**
- * Interface for player Mob
+ * Interface for player mobCore
  * You can tell it, what action player have chosen
  */
 interface PlayerMob: Mob {

@@ -2,7 +2,7 @@ package ru.spbau.maxim.controller
 
 import org.codetome.zircon.api.input.Input
 import org.codetome.zircon.api.input.InputType
-import ru.spbau.maxim.mobs.Mob.MobWithEffects
+import ru.spbau.maxim.mobs.mobCore.MobWithEffects
 import ru.spbau.maxim.mobs.PlayerMob
 import ru.spbau.maxim.mobs.actions.Action
 import ru.spbau.maxim.mobs.actions.HitAction

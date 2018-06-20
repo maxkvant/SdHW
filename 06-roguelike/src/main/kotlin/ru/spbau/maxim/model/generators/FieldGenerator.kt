@@ -11,7 +11,7 @@ import java.lang.Math.abs
  * Generates dungeon field with n rows, m columns
  */
 fun generateField(n: Int, m: Int): FieldReadOnly<Cell> {
-    val arr = Array(n, {Array<Cell>(m, { Cell.WALL})})
+    val arr = Array(n, {Array(m, { Cell.WALL})})
 
     val grid = Grid(n, m)
     val dungeonGenerator = DungeonGenerator()

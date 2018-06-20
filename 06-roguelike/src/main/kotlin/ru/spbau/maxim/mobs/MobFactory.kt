@@ -1,8 +1,8 @@
 package ru.spbau.maxim.mobs
 
-import ru.spbau.maxim.mobs.Mob.MobAbstract
-import ru.spbau.maxim.mobs.Mob.MobDecoratorCombiner
-import ru.spbau.maxim.mobs.Mob.MobWithEffects
+import ru.spbau.maxim.mobs.mobCore.MobAbstract
+import ru.spbau.maxim.mobs.mobCore.MobDecoratorCombiner
+import ru.spbau.maxim.mobs.mobCore.MobWithEffects
 import ru.spbau.maxim.mobs.actions.Action
 import ru.spbau.maxim.mobs.actions.HitSibling
 import ru.spbau.maxim.mobs.actions.Move
@@ -21,18 +21,6 @@ import ru.spbau.maxim.model.Model
 class MobFactory {
     private val enemyHp: Int = 40
     private val playerHp = 100
-
-    fun sleepingMob(position: Position): MobWithEffects {
-        val artifactStorage = EmptyArtifactStorage
-        val baseMob = SleepingMob(enemyHp, position, artifactStorage)
-        return MobDecoratorCombiner(baseMob)
-    }
-
-    fun sleepingMobOneArtifact(position: Position, artifact: Artifact): MobWithEffects {
-        val artifactStorage = OneArtifactStorage(artifact)
-        val baseMob = SleepingMob(enemyHp, position, artifactStorage)
-        return MobDecoratorCombiner(baseMob)
-    }
 
     fun enemyNoArtifacts(position: Position): MobWithEffects {
         val artifactStorage = EmptyArtifactStorage
@@ -53,16 +41,6 @@ class MobFactory {
                 baseMob.setPlayerTurn(playerTurn)
             }
         }
-    }
-
-    private class SleepingMob(maxHp: Int, position: Position, storage: ArtifactStorage) : MobAbstract(maxHp, position) {
-        override val artifactStorage: ArtifactStorage = storage
-        override val defence: Int
-            get() = 1
-        override val attack: Int
-            get() = 5
-
-        override fun turn(env: Model): Action = Rest()
     }
 
     private class Enemy(maxHp: Int, position: Position, storage: ArtifactStorage) : MobAbstract(maxHp, position) {

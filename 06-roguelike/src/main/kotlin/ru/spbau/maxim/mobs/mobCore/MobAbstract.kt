@@ -1,14 +1,14 @@
-package ru.spbau.maxim.mobs.Mob
+package ru.spbau.maxim.mobs.mobCore
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.Position
 import kotlin.math.max
 import kotlin.math.min
 
 /**
- * Abstract class for Mob,
+ * Abstract class for mobCore,
  * Implements it's hp ad position changes
  */
-abstract class MobAbstract(val maxHp: Int, private var pos: Position): Mob {
+abstract class MobAbstract(private val maxHp: Int, private var pos: Position): Mob {
     private var hp: Int = maxHp
 
     override fun getHp() = hp

@@ -1,6 +1,6 @@
 package ru.spbau.maxim.mobs.actions
 
-import ru.spbau.maxim.mobs.Mob.MobWithEffects
+import ru.spbau.maxim.mobs.mobCore.MobWithEffects
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.ModelReadOnly
 

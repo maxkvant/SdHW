@@ -1,12 +1,11 @@
-package ru.spbau.maxim.mobs.Mob
+package ru.spbau.maxim.mobs.mobCore
 
 import ru.spbau.maxim.mobs.artifacts.ArtifactStorage
 import ru.spbau.maxim.model.Model
-import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
 
 /**
- * Implements decorator pattern for Mob
+ * Implements decorator pattern for mobCore
  */
 abstract class MobDecoratorImpl: MobDecorator {
     override val attack: Int

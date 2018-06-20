@@ -16,6 +16,6 @@ interface ArtifactsStorageReadOnly {
     fun getArtifact(index: Int): Artifact?
 
     fun getArtifacts(): List<Artifact> {
-        return (0 until capacity).map { i -> getArtifact(i) }.filterNotNull()
+        return (0 until capacity).mapNotNull { i -> getArtifact(i) }
     }
 }

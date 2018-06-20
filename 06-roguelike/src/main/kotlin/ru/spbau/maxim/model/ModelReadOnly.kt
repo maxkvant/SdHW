@@ -1,6 +1,6 @@
 package ru.spbau.maxim.model
 
-import ru.spbau.maxim.mobs.Mob.MobReadOnly
+import ru.spbau.maxim.mobs.mobCore.MobReadOnly
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.field.FieldReadOnly
 

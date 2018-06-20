@@ -1,6 +1,6 @@
 package ru.spbau.maxim.model.impl
 
-import ru.spbau.maxim.mobs.Mob.MobWithEffects
+import ru.spbau.maxim.mobs.mobCore.MobWithEffects
 import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.field.FieldReadOnly
@@ -9,8 +9,8 @@ import ru.spbau.maxim.model.field.FieldReadOnly
  * Stores mobs
  */
 class MobStorage(val field: FieldReadOnly<Cell>) {
-    val posMob = mutableMapOf<Position, MobWithEffects>()
-    val mobPos = mutableMapOf<MobWithEffects, Position>()
+    private val posMob = mutableMapOf<Position, MobWithEffects>()
+    private val mobPos = mutableMapOf<MobWithEffects, Position>()
 
     /**
      * adds mob to it's position

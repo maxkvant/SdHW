@@ -1,7 +1,7 @@
 package ru.spbau.maxim.model.impl
 
-import ru.spbau.maxim.mobs.Mob.MobReadOnly
-import ru.spbau.maxim.mobs.Mob.MobWithEffects
+import ru.spbau.maxim.mobs.mobCore.MobReadOnly
+import ru.spbau.maxim.mobs.mobCore.MobWithEffects
 import ru.spbau.maxim.mobs.PlayerMobWithEffects
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.Position
@@ -48,7 +48,7 @@ class ModelImpl(private val field: FieldReadOnly<Cell>, private val curPlayer: P
 
     override fun getMobsReadOnly(): List<MobReadOnly> = getMobs()
 
-    override fun getCell(position: Position): Cell = field.get(position)
+    override fun getCell(position: Position): Cell = field[position]
 
     override fun getMobReadOnly(position: Position): MobReadOnly? = getMob(position)
 

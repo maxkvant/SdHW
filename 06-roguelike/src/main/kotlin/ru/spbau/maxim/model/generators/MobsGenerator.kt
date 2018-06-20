@@ -3,13 +3,10 @@ package ru.spbau.maxim.model.generators
 import ru.spbau.maxim.mobs.effects.Freezer
 import ru.spbau.maxim.mobs.effects.Helmet
 import ru.spbau.maxim.mobs.effects.Knife
-import ru.spbau.maxim.mobs.effects.StorageEffect
-import ru.spbau.maxim.mobs.Mob.*
+import ru.spbau.maxim.mobs.mobCore.*
 import ru.spbau.maxim.mobs.MobFactory
 import ru.spbau.maxim.mobs.PlayerMobWithEffects
 import ru.spbau.maxim.mobs.artifacts.Artifact
-import ru.spbau.maxim.mobs.artifacts.EmptyArtifactStorage
-import ru.spbau.maxim.mobs.artifacts.OneArtifactStorage
 import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.field.FieldReadOnly

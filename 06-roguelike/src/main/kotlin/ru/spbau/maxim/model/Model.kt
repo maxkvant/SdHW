@@ -1,6 +1,6 @@
 package ru.spbau.maxim.model
 
-import ru.spbau.maxim.mobs.Mob.MobWithEffects
+import ru.spbau.maxim.mobs.mobCore.MobWithEffects
 import ru.spbau.maxim.mobs.PlayerMobWithEffects
 
 /**

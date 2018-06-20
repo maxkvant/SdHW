@@ -1,4 +1,4 @@
-package ru.spbau.maxim.mobs.Mob
+package ru.spbau.maxim.mobs.mobCore
 
 import ru.spbau.maxim.mobs.actions.Action
 import ru.spbau.maxim.mobs.effects.StorageEffect

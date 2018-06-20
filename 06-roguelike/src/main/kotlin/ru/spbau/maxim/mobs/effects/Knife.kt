@@ -1,7 +1,7 @@
 package ru.spbau.maxim.mobs.effects
 
 /**
- * Knife Effect: Increases Mob's attack
+ * Knife Effect: Increases mobCore's attack
  */
 class Knife: EffectAbstract() {
     override val attack: Int

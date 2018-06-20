@@ -2,18 +2,16 @@ package ru.spbau.maxim.view
 
 import org.codetome.zircon.api.Position
 import org.codetome.zircon.api.Size
-import org.codetome.zircon.api.builder.LayerBuilder
 import org.codetome.zircon.api.builder.TerminalBuilder
 import org.codetome.zircon.api.resource.CP437TilesetResource
 import ru.spbau.maxim.model.ModelReadOnly
-import ru.spbau.maxim.model.field.Cell
-import ru.spbau.maxim.model.Position as Pos
-import ru.spbau.maxim.view.GameView.*
+import ru.spbau.maxim.view.GameView.InputListener
 import ru.spbau.maxim.view.layers.ArtifactsLayer
 import ru.spbau.maxim.view.layers.FieldLayer
 import ru.spbau.maxim.view.layers.InfoLayer
 import ru.spbau.maxim.view.layers.TerminalLayer
 import java.util.function.Consumer
+import ru.spbau.maxim.model.Position as Pos
 
 /**
  * Implementation of GameView in terminal (using terminal for zircon lib)
@@ -69,6 +67,9 @@ class GameViewIml(width: Int, height: Int): GameView {
     }
 
     override fun close() {
+        fieldLayer.clear()
+        infoLayer.clear()
+        artifactsLayer.clear()
         terminal.close()
     }
 }

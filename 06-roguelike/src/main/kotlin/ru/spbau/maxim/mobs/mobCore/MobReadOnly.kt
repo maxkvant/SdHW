@@ -1,10 +1,10 @@
-package ru.spbau.maxim.mobs.Mob
+package ru.spbau.maxim.mobs.mobCore
 
 import ru.spbau.maxim.mobs.artifacts.ArtifactsStorageReadOnly
 import ru.spbau.maxim.model.Position
 
 /**
- * Interface for read only access to Mob
+ * Interface for read only access to mobCore
  * methods shouldn't modify mob
  */
 interface MobReadOnly {

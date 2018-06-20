@@ -1,10 +1,10 @@
-package ru.spbau.maxim.mobs.Mob
+package ru.spbau.maxim.mobs.mobCore
 
 import ru.spbau.maxim.model.ModelReadOnly
 import kotlin.reflect.KClass
 
 /**
- * You can add effects(decorators) to that kind of Mob
+ * You can add effects(decorators) to that kind of mobCore
  */
 interface MobWithEffects: Mob {
     /**

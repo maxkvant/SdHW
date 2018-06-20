@@ -8,7 +8,7 @@ import org.codetome.zircon.api.terminal.Terminal
 import ru.spbau.maxim.model.ModelReadOnly
 
 /**
- * Interface for layer of terminal, that represents part of screen, with top left coner offset
+ * Interface for layer of terminal, that represents part of screen, with top left corner offset
  */
 interface TerminalLayer {
     val size: Size

@@ -1,4 +1,4 @@
-package ru.spbau.maxim.mobs.Mob
+package ru.spbau.maxim.mobs.mobCore
 
 /**
  * Interface for MobDecorator, where you can change inner mob

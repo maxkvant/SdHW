@@ -1,4 +1,4 @@
-package ru.spbau.maxim.mobs.Mob
+package ru.spbau.maxim.mobs.mobCore
 
 /**
  * Implements MobDecoratorMutable
