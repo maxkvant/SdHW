@@ -85,7 +85,8 @@ class MobFactory {
                     val di = sign(playerPos.i - myPos.i + .0).roundToInt()
                     val dj = sign(playerPos.j - myPos.j + .0).roundToInt()
 
-                    val posTo = if (rnd.nextBoolean() && di != 0) {
+
+                    val posTo = if ((dj == 0 || rnd.nextBoolean()) && di != 0) {
                         Position(myPos.i + di, myPos.j)
                     } else {
                         Position(myPos.i, myPos.j + dj)

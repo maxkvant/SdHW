@@ -9,7 +9,7 @@ import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.field.FieldReadOnly
 
-class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: PlayerMobWithEffects, enemies: List<Mob>): Model {
+class ModelImpl(private val field: FieldReadOnly<Cell>, private val curPlayer: PlayerMobWithEffects, enemies: List<Mob>): Model {
     private val mobStorage = MobStorage(field)
     private var turns = 0
 
@@ -17,6 +17,8 @@ class ModelImpl(val field: FieldReadOnly<Cell>, private val curPlayer: PlayerMob
         enemies.forEach { mobStorage.addMob(it) }
         mobStorage.addMob(curPlayer)
     }
+
+    override fun getField(): FieldReadOnly<Cell> = field
 
     override fun nextTurn(f: Model.() -> Unit) {
         f()

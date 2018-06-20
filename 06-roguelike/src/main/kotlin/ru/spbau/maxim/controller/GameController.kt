@@ -1,5 +1,7 @@
 package ru.spbau.maxim.controller
 
+import org.codetome.zircon.api.input.Input
+import org.codetome.zircon.api.input.InputType
 import ru.spbau.maxim.mobs.Mob.MobWithEffects
 import ru.spbau.maxim.mobs.PlayerMob.*
 import ru.spbau.maxim.model.Model
@@ -7,27 +9,39 @@ import ru.spbau.maxim.view.GameView
 import ru.spbau.maxim.mobs.actions.Action
 import ru.spbau.maxim.mobs.actions.HitAction
 import ru.spbau.maxim.mobs.actions.Rest
+import ru.spbau.maxim.view.GameView.*
+import sun.print.DialogOwner
 
 class GameController(val model: Model, private val view: GameView) {
+    init {
+        view.draw(model)
 
-    fun runGame(beforeTurn: () -> Unit) {
-        while (!model.finished()) {
-            beforeTurn()
-            println("hp: ${model.getPlayer().getHp()}")
-            val c = readLine()
-            val playerTurn = when (c) {
-                ">" -> PlayerTurn.RIGHT
-                "^" -> PlayerTurn.UP
-                "<" -> PlayerTurn.LEFT
-                "v" -> PlayerTurn.DOWN
-                else -> PlayerTurn.REST
+
+        println(model.getPlayer().getPosition())
+
+        view.addInputListener(InputListener.of { input ->
+            if (input.isKeyStroke()) {
+                val keyStroke = input.asKeyStroke()
+                val inputType = keyStroke.getInputType()
+
+                val playerTurn: PlayerTurn? = when (inputType) {
+                    InputType.ArrowRight -> PlayerTurn.RIGHT
+                    InputType.ArrowUp    -> PlayerTurn.UP
+                    InputType.ArrowLeft  -> PlayerTurn.LEFT
+                    InputType.ArrowDown  -> PlayerTurn.DOWN
+                    InputType.Enter      -> PlayerTurn.REST
+                    else -> null
+                }
+
+                if (playerTurn != null) {
+                    model.getPlayer().setPlayerTurn(playerTurn)
+                    turn()
+                }
             }
-            model.getPlayer().setPlayerTurn(playerTurn)
-            turn()
-        }
+        })
     }
 
-    fun turn() {
+    private fun turn() {
         model.nextTurn {
             if (!finished()) {
                 getMobs().forEach { mob ->
@@ -61,5 +75,6 @@ class GameController(val model: Model, private val view: GameView) {
                 }
             }
         }
+        view.draw(model)
     }
 }

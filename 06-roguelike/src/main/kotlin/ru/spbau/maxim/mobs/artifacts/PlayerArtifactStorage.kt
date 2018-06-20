@@ -1,18 +1,19 @@
 package ru.spbau.maxim.mobs.artifacts
 
 class PlayerArtifactStorage: ArtifactStorage {
-    private val size = 4
-    private val artifacts: Array<Artifact?> = Array(size, {null})
+    override val capacity = 4
+
+    private val artifacts: Array<Artifact?> = Array(capacity, { null })
     private var currentArtifact: Artifact? = null
 
-    fun getArtifact(index: Int): Artifact? {
+    override fun getArtifact(index: Int): Artifact? {
         return artifacts[index]
     }
 
     override fun getCurrentArtifact(): Artifact? = currentArtifact
 
     override fun tryAddArtifact(artifact: Artifact): Boolean {
-        for (i in 0..size) {
+        for (i in 0..capacity) {
             if (artifacts[i] == null) {
                 artifacts[i] = artifact
                 return true
@@ -22,15 +23,13 @@ class PlayerArtifactStorage: ArtifactStorage {
     }
 
     override fun removeArtifact(index: Int): Boolean {
-        val sucess = artifacts[index] != null
+        val success = artifacts[index] != null
         artifacts[index] = null
-        return sucess
+        return success
     }
 
     override fun choseArtifact(index: Int): Boolean {
         currentArtifact = artifacts[index]
         return currentArtifact != null
     }
-
-    override fun getArtifacts(): List<Artifact> = artifacts.filterNotNull()
 }

@@ -9,6 +9,12 @@ interface ArtifactStorage {
 
     fun choseArtifact(index: Int): Boolean
 
-    fun getArtifacts(): List<Artifact>
+    val capacity: Int
+
+    fun getArtifact(index: Int): Artifact?
+
+    fun getArtifacts(): List<Artifact> {
+        return (0 until capacity).map { i -> getArtifact(i) }.filterNotNull()
+    }
 }
 
