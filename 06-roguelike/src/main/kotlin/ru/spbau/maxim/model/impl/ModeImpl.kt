@@ -1,7 +1,6 @@
 package ru.spbau.maxim.model.impl
 
 import ru.spbau.maxim.mobs.Mob.MobReadOnly
-import ru.spbau.maxim.mobs.PlayerMob
 import ru.spbau.maxim.mobs.PlayerMobWithEffects
 import ru.spbau.maxim.model.Mob
 import ru.spbau.maxim.model.Model
@@ -21,11 +20,12 @@ class ModelImpl(private val field: FieldReadOnly<Cell>, private val curPlayer: P
     override fun getField(): FieldReadOnly<Cell> = field
 
     override fun nextTurn(f: Model.() -> Unit) {
-        f()
-        getMobs().forEach { updateMobPos(it.getPosition()) }
-        turns += 1
+        if (!finished()) {
+            f()
+            getMobs().forEach { updateMobPos(it.getPosition()) }
+            turns += 1
+        }
     }
-
 
     override fun time(): Int = turns
 

@@ -9,18 +9,41 @@ import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.Position as Pos
 import ru.spbau.maxim.view.GameView.*
+import ru.spbau.maxim.view.layers.ArtifactsLayer
+import ru.spbau.maxim.view.layers.FieldLayer
+import ru.spbau.maxim.view.layers.InfoLayer
+import ru.spbau.maxim.view.layers.TerminalLayer
 import java.util.function.Consumer
 
-
-
-class GameViewIml(private val width: Int, private val height: Int): GameView {
+class GameViewIml(width: Int, height: Int): GameView {
     private val inputListeners: MutableList<InputListener> = mutableListOf()
-
+    private val size = Size.of(width, height)
     private val terminal = TerminalBuilder
             .newBuilder()
-            .initialTerminalSize(Size.of(width, height))
+            .initialTerminalSize(size)
             .font(CP437TilesetResource.WANDERLUST_16X16.toFont())
             .buildTerminal()
+
+    private val barWidth = 15
+
+    private val fieldLayer: TerminalLayer = FieldLayer(
+            size = Size.of(size.columns - barWidth, size.rows),
+            offset = Position.of(0, 0),
+            terminal = terminal
+    )
+
+    private val infoLayer: TerminalLayer = InfoLayer(
+            size = Size.of(barWidth, 15),
+            offset = Position.of(size.columns - barWidth, 0),
+            terminal = terminal
+    )
+
+    private val artifactsLayer: TerminalLayer = ArtifactsLayer(
+            size = Size.of(barWidth, size.rows - infoLayer.size.rows),
+            offset = Position.of(size.columns - barWidth, infoLayer.size.rows),
+            terminal = terminal
+    )
+
 
     init {
         terminal.onInput(Consumer { input ->
@@ -34,34 +57,11 @@ class GameViewIml(private val width: Int, private val height: Int): GameView {
         inputListeners.add(listener)
     }
 
+
     override fun draw(model: ModelReadOnly) {
-        val playerPos = model.getPlayerReadOnly().getPosition()
-        val field = model.getField()
-
-        val layer = LayerBuilder.newBuilder()
-                .size(Size(width - 10, height))
-                .build()
-
-
-        for (row in 0 until height) {
-            for (col in 0 until width) {
-                val fieldPos = Pos(playerPos.i + (row - height / 2), playerPos.j + (col - width / 2))
-                val c = if (field.inside(fieldPos)) {
-                    when {
-                        fieldPos == playerPos && !model.getPlayerReadOnly().isDead() -> '@'
-                        model.getMobReadOnly(fieldPos) != null -> '&'
-                        model.getCell(fieldPos) == Cell.WALL -> '#'
-                        model.getCell(fieldPos) == Cell.SPACE -> '.'
-                        model.getCell(fieldPos) == Cell.ROUTE -> '.'
-                        else -> ' '
-                    }
-                } else {
-                    ' '
-                }
-                layer.setCharacterAt(Position.of(col, row), c)
-            }
-        }
-        terminal.pushLayer(layer)
+        fieldLayer.draw(model)
+        infoLayer.draw(model)
+        artifactsLayer.draw(model)
         terminal.flush()
     }
 

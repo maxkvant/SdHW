@@ -1,5 +1,6 @@
 package ru.spbau.maxim.mobs.Mob
 
+import ru.spbau.maxim.mobs.artifacts.ArtifactsStorageReadOnly
 import ru.spbau.maxim.model.Position
 
 interface MobReadOnly: Cloneable {
@@ -11,4 +12,6 @@ interface MobReadOnly: Cloneable {
     fun isDead(): Boolean
 
     fun getPosition(): Position
+
+    val artifactStorage: ArtifactsStorageReadOnly
 }

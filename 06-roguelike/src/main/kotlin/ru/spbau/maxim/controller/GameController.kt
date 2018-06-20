@@ -39,12 +39,11 @@ class GameController(val model: Model, private val view: GameView) {
                 }
             }
         })
-        model.getPlayer().addDecorator(Frozen(), 3, model)
-
     }
 
     private fun turn() {
         model.nextTurn {
+            getPlayer().increaseHp(1)
             if (!finished()) {
                 getMobs().forEach { mob ->
                     if (mob.isDead()) {
@@ -78,5 +77,6 @@ class GameController(val model: Model, private val view: GameView) {
             }
         }
         view.draw(model)
+
     }
 }

@@ -15,5 +15,5 @@ interface Mob: MobReadOnly {
 
     fun moveTo(pos: Position, model: Model)
 
-    val artifactStorage: ArtifactStorage
+    override val artifactStorage: ArtifactStorage
 }
