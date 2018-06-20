@@ -14,11 +14,7 @@ class InfoLayer(
 ) : TerminalLayer {
 
     override fun draw(model: ModelReadOnly) {
-        val layer = LayerBuilder.newBuilder()
-                .size(size)
-                .offset(offset)
-                .build()
-
+        val layer = buildLayer()
         drawInfo(layer, model)
         terminal.pushLayer(layer)
         terminal.flush()

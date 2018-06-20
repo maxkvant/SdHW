@@ -11,9 +11,11 @@ fun main(args: Array<String>) {
 
     val field = generateField(200, 200)
 
-    val (player, enemies) = generateMobs(field, 0.02)
-    val model: Model = ModelImpl(field, player, enemies)
-    val view = GameViewIml(60, 40)
+    val modelGenerator: () -> Model = {
+        val (player, enemies) = generateMobs(field, 0.02)
+        ModelImpl(field, player, enemies)
+    }
+        val view = GameViewIml(60, 40)
 
-    GameController(model, view)
+    GameController(modelGenerator, view)
 }
