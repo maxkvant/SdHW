@@ -64,7 +64,7 @@ class GameController(val model: Model, private val view: GameView) {
                             val deadBefore = action.victim.isDead()
                             action.executeIfValid(mob, this)
                             val deadAfter = action.victim.isDead()
-                            if (!deadAfter && deadBefore) {
+                            if (deadAfter && !deadBefore) {
                                 val victimArtifacts = action.victim.artifactStorage.getArtifacts().shuffled()
                                 victimArtifacts.forEach { artifact ->
                                     mob.artifactStorage.tryAddArtifact(artifact)
