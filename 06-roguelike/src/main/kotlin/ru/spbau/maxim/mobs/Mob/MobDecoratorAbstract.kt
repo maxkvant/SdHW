@@ -17,7 +17,7 @@ abstract class MobDecoratorAbstract: MobDecorator {
 
     override fun getHp(): Int = getInnerMob().getHp()
 
-    override fun turn(env: ModelReadOnly) = getInnerMob().turn(env)
+    override fun turn(env: Model) = getInnerMob().turn(env)
 
     override fun decreaseHp(attack: Int) = getInnerMob().decreaseHp(attack)
 

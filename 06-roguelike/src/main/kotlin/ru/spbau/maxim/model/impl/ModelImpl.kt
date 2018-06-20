@@ -1,14 +1,14 @@
 package ru.spbau.maxim.model.impl
 
 import ru.spbau.maxim.mobs.Mob.MobReadOnly
+import ru.spbau.maxim.mobs.Mob.MobWithEffects
 import ru.spbau.maxim.mobs.PlayerMobWithEffects
-import ru.spbau.maxim.model.Mob
 import ru.spbau.maxim.model.Model
 import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.field.FieldReadOnly
 
-class ModelImpl(private val field: FieldReadOnly<Cell>, private val curPlayer: PlayerMobWithEffects, enemies: List<Mob>): Model {
+class ModelImpl(private val field: FieldReadOnly<Cell>, private val curPlayer: PlayerMobWithEffects, enemies: List<MobWithEffects>): Model {
     private val mobStorage = MobStorage(field)
     private var turns = 0
 
@@ -31,13 +31,13 @@ class ModelImpl(private val field: FieldReadOnly<Cell>, private val curPlayer: P
 
     override fun finished(): Boolean = getPlayer().isDead()
 
-    override fun getMobs(): List<Mob> = mobStorage.getMobs()
+    override fun getMobs(): List<MobWithEffects> = mobStorage.getMobs()
 
-    override fun getMob(pos: Position): Mob? = mobStorage.getMob(pos)
+    override fun getMob(pos: Position): MobWithEffects? = mobStorage.getMob(pos)
 
-    override fun addMob(mob: Mob) = mobStorage.addMob(mob)
+    override fun addMob(mobWithEffects: MobWithEffects) = mobStorage.addMob(mobWithEffects)
 
-    override fun removeMob(mob: Mob) = mobStorage.removeMob(mob)
+    override fun removeMob(mobWithEffects: MobWithEffects) = mobStorage.removeMob(mobWithEffects)
 
     override fun getPlayer(): PlayerMobWithEffects = curPlayer
 

@@ -1,15 +1,16 @@
 package ru.spbau.maxim.model
 
+import ru.spbau.maxim.mobs.Mob.MobWithEffects
 import ru.spbau.maxim.mobs.PlayerMobWithEffects
 
 interface Model: ModelReadOnly {
-    fun getMobs(): List<Mob>
+    fun getMobs(): List<MobWithEffects>
 
-    fun getMob(pos: Position): Mob?
+    fun getMob(pos: Position): MobWithEffects?
 
-    fun addMob(mob: Mob)
+    fun addMob(mobWithEffects: MobWithEffects)
 
-    fun removeMob(mob: Mob)
+    fun removeMob(mobWithEffects: MobWithEffects)
 
     fun getPlayer(): PlayerMobWithEffects
 

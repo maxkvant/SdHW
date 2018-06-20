@@ -1,44 +1,44 @@
 package ru.spbau.maxim.model.impl
 
-import ru.spbau.maxim.model.Mob
+import ru.spbau.maxim.mobs.Mob.MobWithEffects
 import ru.spbau.maxim.model.Position
 import ru.spbau.maxim.model.field.Cell
 import ru.spbau.maxim.model.field.FieldReadOnly
 
 class MobStorage(val field: FieldReadOnly<Cell>) {
-    val posMob = mutableMapOf<Position, Mob>()
-    val mobPos = mutableMapOf<Mob, Position>()
+    val posMob = mutableMapOf<Position, MobWithEffects>()
+    val mobPos = mutableMapOf<MobWithEffects, Position>()
 
-    fun addMob(mob: Mob) {
-        val pos = mob.getPosition()
+    fun addMob(mobWithEffects: MobWithEffects) {
+        val pos = mobWithEffects.getPosition()
         require(posMob[pos] == null)
 
-        posMob[mob.getPosition()] = mob
-        mobPos[mob] = pos
+        posMob[mobWithEffects.getPosition()] = mobWithEffects
+        mobPos[mobWithEffects] = pos
     }
 
     fun updateMobPosition(oldPos: Position) {
-        val mob: Mob? = posMob[oldPos]
-        if (mob != null) {
-            val pos = mob.getPosition()
+        val mobWithEffects: MobWithEffects? = posMob[oldPos]
+        if (mobWithEffects != null) {
+            val pos = mobWithEffects.getPosition()
             posMob.remove(oldPos)
-            posMob[mob.getPosition()] = mob
-            mobPos[mob] = pos
+            posMob[mobWithEffects.getPosition()] = mobWithEffects
+            mobPos[mobWithEffects] = pos
         }
     }
 
-    fun getMobs(): List<Mob> {
+    fun getMobs(): List<MobWithEffects> {
         return posMob.values.toList()
     }
 
-    fun getMob(position: Position): Mob? {
+    fun getMob(position: Position): MobWithEffects? {
         return posMob[position]
     }
 
-    fun removeMob(mob: Mob) {
-        val pos = mob.getPosition()
-        require(posMob[mob.getPosition()] === mob)
-        mobPos.remove(mob)
+    fun removeMob(mobWithEffects: MobWithEffects) {
+        val pos = mobWithEffects.getPosition()
+        require(posMob[mobWithEffects.getPosition()] === mobWithEffects)
+        mobPos.remove(mobWithEffects)
         posMob.remove(pos)
     }
 }

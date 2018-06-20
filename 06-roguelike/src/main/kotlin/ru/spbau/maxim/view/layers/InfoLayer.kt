@@ -17,7 +17,6 @@ class InfoLayer(
         val layer = buildLayer()
         drawInfo(layer, model)
         terminal.pushLayer(layer)
-        terminal.flush()
     }
 
     private fun drawInfo(layer: Layer, model: ModelReadOnly) {

@@ -17,7 +17,6 @@ class ArtifactsLayer(
         val layer = buildLayer()
         drawArtifacts(layer, model)
         terminal.pushLayer(layer)
-        terminal.flush()
     }
 
     private fun drawArtifacts(layer: Layer, model: ModelReadOnly) {

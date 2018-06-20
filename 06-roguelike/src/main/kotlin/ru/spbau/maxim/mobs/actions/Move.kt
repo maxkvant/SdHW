@@ -9,7 +9,8 @@ import ru.spbau.maxim.model.field.Cell
 
 data class Move(private val mob: Mob, private val posTo: Position): Action {
     override fun validate(author: MobWithEffects, model: ModelReadOnly): Boolean {
-        return model.getCell(posTo) != Cell.WALL
+        return model.getField().inside(posTo)
+                && model.getCell(posTo) != Cell.WALL
                 && model.getMobReadOnly(posTo) == null
                 && mob.getPosition().dist(posTo) == 1
     }

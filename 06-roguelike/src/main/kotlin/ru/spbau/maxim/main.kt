@@ -9,7 +9,7 @@ import ru.spbau.maxim.view.GameViewIml
 
 fun main(args: Array<String>) {
 
-    val field = generateField(200, 200)
+    val field = generateField(140, 140)
 
     val modelGenerator: () -> Model = {
         val (player, enemies) = generateMobs(field, 0.02)

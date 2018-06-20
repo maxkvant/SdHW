@@ -1,6 +1,5 @@
 package ru.spbau.maxim.mobs
 
-import ru.spbau.maxim.mobs.Mob.Mob
 import ru.spbau.maxim.mobs.Mob.MobAbstract
 import ru.spbau.maxim.mobs.Mob.MobDecoratorCombiner
 import ru.spbau.maxim.mobs.Mob.MobWithEffects
@@ -8,13 +7,13 @@ import ru.spbau.maxim.mobs.actions.Action
 import ru.spbau.maxim.mobs.actions.HitSibling
 import ru.spbau.maxim.mobs.actions.Move
 import ru.spbau.maxim.mobs.actions.Rest
-import ru.spbau.maxim.model.ModelReadOnly
 import ru.spbau.maxim.model.Position
 import java.util.*
 import kotlin.math.roundToInt
 import kotlin.math.sign
 import ru.spbau.maxim.mobs.PlayerMob.*
 import ru.spbau.maxim.mobs.artifacts.*
+import ru.spbau.maxim.model.Model
 
 class MobFactory {
     private val enemyHp: Int = 40
@@ -60,7 +59,7 @@ class MobFactory {
         override val attack: Int
             get() = 5
 
-        override fun turn(env: ModelReadOnly): Action = Rest()
+        override fun turn(env: Model): Action = Rest()
     }
 
     private class Enemy(maxHp: Int, position: Position, storage: ArtifactStorage) : MobAbstract(maxHp, position) {
@@ -70,8 +69,8 @@ class MobFactory {
         override val attack: Int
             get() = 5
 
-        override fun turn(env: ModelReadOnly): Action {
-            val playerMob = env.getPlayerReadOnly()
+        override fun turn(env: Model): Action {
+            val playerMob = env.getPlayer()
             val playerPos = playerMob.getPosition()
 
             val myPos = getPosition()
@@ -80,7 +79,7 @@ class MobFactory {
             val rnd = Random()
 
             when {
-                dist == 1 -> return HitSibling(myPos, playerMob as MobWithEffects)
+                dist == 1 -> return HitSibling(myPos, playerMob)
                 dist <= 10 -> {
                     val di = sign(playerPos.i - myPos.i + .0).roundToInt()
                     val dj = sign(playerPos.j - myPos.j + .0).roundToInt()
@@ -118,7 +117,7 @@ class MobFactory {
             this.playerTurn = playerTurn
         }
 
-        override fun turn(env: ModelReadOnly): Action {
+        override fun turn(env: Model): Action {
             val pos = getPosition()
             val posTo = when (playerTurn) {
                 PlayerTurn.REST  -> pos
@@ -130,8 +129,8 @@ class MobFactory {
             return if (posTo == pos) {
                 Rest()
             } else {
-                val victim = env.getMobReadOnly(posTo)
-                if (victim == null) Move(this, posTo) else HitSibling(pos, victim as MobWithEffects)
+                val victim = env.getMob(posTo)
+                if (victim == null) Move(this, posTo) else HitSibling(pos, victim)
             }
         }
     }

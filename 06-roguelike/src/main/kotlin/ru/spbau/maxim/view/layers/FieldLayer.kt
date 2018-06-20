@@ -18,7 +18,6 @@ class FieldLayer(
         val layer= buildLayer()
         drawField(layer, model)
         terminal.pushLayer(layer)
-        terminal.flush()
     }
 
     private fun drawField(layer: Layer, model: ModelReadOnly) {
