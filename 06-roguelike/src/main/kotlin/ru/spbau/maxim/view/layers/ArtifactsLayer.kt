@@ -30,14 +30,14 @@ class ArtifactsLayer(
 
         val messages = mutableListOf("Artifacts")
 
-        val currentArtifact = artifactStorage.getCurrentArtifact()
+        val currentArtifactI = artifactStorage.getCurrentArtifactI()
 
         for (i in 0 until artifactStorage.capacity) {
             val artifact = artifactStorage.getArtifact(i)
-            val chosen = artifact != null && artifact == currentArtifact
+            val chosen = artifact != null && currentArtifactI == i
             val chosenC = if (chosen) ">" else "*"
             val name = artifact?.name ?: "-"
-            messages.add("$chosenC $name")
+            messages.add("$chosenC ${i+1}. $name")
         }
 
         clearBoard(size, layer)

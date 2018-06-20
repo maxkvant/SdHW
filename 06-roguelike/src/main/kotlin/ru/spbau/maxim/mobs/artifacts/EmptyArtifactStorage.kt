@@ -4,10 +4,9 @@ class EmptyArtifactStorage: ArtifactStorage {
     override val capacity: Int
         get() = 0
 
+    override fun getCurrentArtifactI(): Int? = null
 
     override fun getArtifacts(): List<Artifact> = listOf()
-
-    override fun getCurrentArtifact(): Artifact? = null
 
     override fun tryAddArtifact(artifact: Artifact): Boolean = false
 

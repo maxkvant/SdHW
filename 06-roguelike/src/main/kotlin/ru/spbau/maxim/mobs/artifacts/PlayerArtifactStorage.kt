@@ -4,13 +4,13 @@ class PlayerArtifactStorage: ArtifactStorage {
     override val capacity = 4
 
     private val artifacts: Array<Artifact?> = Array(capacity, { null })
-    private var currentArtifact: Artifact? = null
+    private var currentArtifactI: Int? = null
+
+    override fun getCurrentArtifactI(): Int? = currentArtifactI
 
     override fun getArtifact(index: Int): Artifact? {
         return artifacts[index]
     }
-
-    override fun getCurrentArtifact(): Artifact? = currentArtifact
 
     override fun tryAddArtifact(artifact: Artifact): Boolean {
         for (i in 0..capacity) {
@@ -29,7 +29,7 @@ class PlayerArtifactStorage: ArtifactStorage {
     }
 
     override fun choseArtifact(index: Int): Boolean {
-        currentArtifact = artifacts[index]
-        return currentArtifact != null
+        currentArtifactI = index
+        return artifacts[index] != null
     }
 }

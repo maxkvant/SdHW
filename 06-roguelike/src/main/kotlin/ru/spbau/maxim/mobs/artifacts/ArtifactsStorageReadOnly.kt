@@ -1,7 +1,12 @@
 package ru.spbau.maxim.mobs.artifacts
 
 interface ArtifactsStorageReadOnly {
-    fun getCurrentArtifact(): Artifact?
+    fun getCurrentArtifact(): Artifact? {
+        val i = getCurrentArtifactI()
+        return if (i != null) getArtifact(i) else null
+    }
+
+    fun getCurrentArtifactI(): Int?
 
     val capacity: Int
 
