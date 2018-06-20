@@ -13,7 +13,7 @@ class PlayerArtifactStorage: ArtifactStorage {
     }
 
     override fun tryAddArtifact(artifact: Artifact): Boolean {
-        for (i in 0..capacity) {
+        for (i in 0..capacity-1) {
             if (artifacts[i] == null) {
                 artifacts[i] = artifact
                 return true

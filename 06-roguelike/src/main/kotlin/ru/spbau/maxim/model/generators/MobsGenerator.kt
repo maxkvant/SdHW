@@ -22,8 +22,8 @@ fun generateMobs(field: FieldReadOnly<Cell>, density: Double): Pair<PlayerMobWit
     fun generateMob(position: Position): MobWithEffects {
         val i = Random().nextInt() % 4
         val helmet = Artifact({ Helmet() }, "helmet")
-        val knife = Artifact({ Knife() }, "helmet")
-        val freezer = Artifact({ Freezer() }, "helmet")
+        val knife = Artifact({ Knife() }, "knife")
+        val freezer = Artifact({ Freezer() }, "freezer")
         return when (i) {
             0 -> factory.enemyNoArtifacts(position)
             1 -> factory.enemyOneArtifact(position, helmet)
