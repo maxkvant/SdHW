@@ -22,7 +22,6 @@ class GameController(val model: Model, private val view: GameView) {
                 "v" -> PlayerTurn.DOWN
                 else -> PlayerTurn.REST
             }
-            println(playerTurn)
             model.getPlayer().setPlayerTurn(playerTurn)
             turn()
         }
@@ -39,10 +38,9 @@ class GameController(val model: Model, private val view: GameView) {
 
                 val mobs = getMobs()
                 val mobActions: List<Pair<MobWithEffects, Action>> = mobs.map { mob -> Pair(mob, mob.turn(this)) }
-                println(mobActions)
 
-                val validActions = mobActions.filter { (mob, action)
-                    -> action.validate(mob, this) && action !is Rest
+                val validActions = mobActions.filter { (mob, action) ->
+                    action.validate(mob, this)
                 }
 
                 validActions.forEach { (mob, action) ->

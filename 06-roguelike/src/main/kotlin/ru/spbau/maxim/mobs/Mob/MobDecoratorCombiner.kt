@@ -34,8 +34,4 @@ open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), M
     override fun hasSuch(decoratorClass: KClass<out MobDecoratorMutable>): Boolean {
         return decorators.any { (decorator, _) -> decoratorClass.java.isInstance(decorator) }
     }
-
-    override fun toString(): String {
-        return getPosition().toString()
-    }
 }
