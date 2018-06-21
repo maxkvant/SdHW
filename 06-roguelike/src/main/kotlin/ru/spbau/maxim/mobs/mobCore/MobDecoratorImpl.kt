@@ -1,31 +1,14 @@
 package ru.spbau.maxim.mobs.mobCore
 
-import ru.spbau.maxim.mobs.artifacts.ArtifactStorage
-import ru.spbau.maxim.model.Model
-import ru.spbau.maxim.model.Position
-
 /**
- * Implements decorator pattern for mobCore
+ * Implements MobDecoratorMutable
  */
-abstract class MobDecoratorImpl: MobDecorator {
-    override val attack: Int
-            get() = getInnerMob().attack
+abstract class MobDecoratorImpl: MobDecoratorAbstract(), MobDecoratorMutable {
+    private var mob: Mob? = null
 
-    override val defence: Int
-            get() = getInnerMob().defence
+    override fun getInnerMob(): Mob = mob!!
 
-    override val artifactStorage: ArtifactStorage
-        get() = getInnerMob().artifactStorage
-
-    override fun turn(env: Model) = getInnerMob().turn(env)
-
-    final override fun getHp(): Int = getInnerMob().getHp()
-
-    override fun decreaseHp(attack: Int) = getInnerMob().decreaseHp(attack)
-
-    override fun increaseHp(heal: Int) = getInnerMob().increaseHp(heal)
-
-    final override fun moveTo(posTo: Position, model: Model) = getInnerMob().moveTo(posTo, model)
-
-    final override fun getPosition(): Position = getInnerMob().getPosition()
+    override fun setMob(mob: Mob) {
+        this.mob = mob
+    }
 }

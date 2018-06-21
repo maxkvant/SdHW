@@ -13,6 +13,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sign
 import ru.spbau.maxim.mobs.PlayerMob.*
 import ru.spbau.maxim.mobs.artifacts.*
+import ru.spbau.maxim.mobs.effects.StorageEffect
 import ru.spbau.maxim.model.Model
 
 /**
@@ -25,30 +26,39 @@ object MobFactory {
     fun enemyNoArtifacts(position: Position): MobWithEffects {
         val artifactStorage = EmptyArtifactStorage
         val baseMob = Enemy(enemyHp, position, artifactStorage)
-        return MobDecoratorCombiner(baseMob)
+        return withStorageEffect(
+                MobDecoratorCombiner(baseMob)
+        )
     }
 
     fun enemyOneArtifact(position: Position, artifact: Artifact): MobWithEffects {
         val artifactStorage = OneArtifactStorage(artifact)
         val baseMob = Enemy(enemyHp, position, artifactStorage)
-        return MobDecoratorCombiner(baseMob)
+        return withStorageEffect(
+                MobDecoratorCombiner(baseMob)
+        )
     }
 
     fun playerMobWithEffects(position: Position): PlayerMobWithEffects {
         val baseMob = PlayerMobImpl(playerHp, position)
-        return object : MobDecoratorCombiner(baseMob), PlayerMobWithEffects {
-            override fun setPlayerTurn(playerTurn: PlayerTurn) {
-                baseMob.setPlayerTurn(playerTurn)
-            }
-        }
+        return withStorageEffect(
+                object : MobDecoratorCombiner(baseMob), PlayerMobWithEffects {
+                    override fun setPlayerTurn(playerTurn: PlayerTurn) {
+                        baseMob.setPlayerTurn(playerTurn)
+                    }
+                }
+        )
+    }
+
+    private fun <T: MobWithEffects> withStorageEffect(mob: T): T {
+        mob.addDecorator(StorageEffect())
+        return mob
     }
 
     private class Enemy(maxHp: Int, position: Position, storage: ArtifactStorage) : MobAbstract(maxHp, position) {
         override val artifactStorage: ArtifactStorage = storage
-        override val defence: Int
-            get() = 1
-        override val attack: Int
-            get() = 5
+        override val defence: Int = 1
+        override val attack: Int = 7
 
         override fun turn(env: Model): Action {
             val playerMob = env.getPlayer()

@@ -7,16 +7,12 @@ import ru.spbau.maxim.model.ModelReadOnly
 import kotlin.reflect.KClass
 
 /**
- * Implementation of MobWithEffects, MobDecoratorImpl
+ * Implementation of MobWithEffects, MobDecoratorAbstract
  */
-open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorImpl(), MobWithEffects {
+open class MobDecoratorCombiner(private val mob: Mob): MobDecoratorAbstract(), MobWithEffects {
     private val decorators: MutableList<Node> = mutableListOf()
     private var curMob = mob
     private var curMobReady = true
-
-    init {
-        addDecorator(StorageEffect())
-    }
 
     final override fun turn(env: Model): Action {
         onNewTurn(env)

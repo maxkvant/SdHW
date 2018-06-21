@@ -5,7 +5,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 /**
- * Abstract class for mobCore,
+ * Abstract class for Mob,
  * Implements it's hp ad position changes
  */
 abstract class MobAbstract(private val maxHp: Int, private var pos: Position): Mob {

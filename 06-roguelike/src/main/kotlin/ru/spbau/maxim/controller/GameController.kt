@@ -10,7 +10,7 @@ import ru.spbau.maxim.view.GameView.*
  * Runs game in view
  * when player dies new model generates by modelGenerator
  */
-class GameController(modelGenerator: () -> Model, private val view: GameView) {
+class GameController(private val modelGenerator: () -> Model, private val view: GameView) {
     private val logger = KotlinLogging.logger { GameController::class.java }
 
     private var subControllers = SubControllers(modelGenerator())
@@ -27,9 +27,8 @@ class GameController(modelGenerator: () -> Model, private val view: GameView) {
             if (repaint) {
                 view.draw(model)
                 if (model.finished()) {
-                    subControllers = SubControllers(modelGenerator())
-                    logger.info { "game finished | restarting" }
-                    view.draw(model)
+                    logger.info { "game finished" }
+                    restart()
                 }
             }
         })
@@ -46,8 +45,18 @@ class GameController(modelGenerator: () -> Model, private val view: GameView) {
                 logger.info { "quit" }
                 view.close()
             }
+
+            if (input.inputTypeIs(InputType.Character) && input.asKeyStroke().getCharacter() == 'r') {
+                restart()
+            }
         })
 
+    }
+
+    private fun restart() {
+        logger.info { "restart" }
+        subControllers = SubControllers(modelGenerator())
+        view.draw(model)
     }
 
     private class SubControllers(val model: Model) {
