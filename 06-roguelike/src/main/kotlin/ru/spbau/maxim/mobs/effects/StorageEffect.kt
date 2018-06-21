@@ -10,7 +10,7 @@ class StorageEffect: EffectImpl() {
     override fun getInnerMob(): Mob {
         val prevMob: Mob = super.getInnerMob()
         val artifact: Artifact? = prevMob.artifactStorage.getCurrentArtifact()
-        val effect: Effect? = artifact?.effect?.invoke()
+        val effect: Effect? = artifact?.effect
         effect?.setMob(prevMob)
         return effect ?: prevMob
     }
