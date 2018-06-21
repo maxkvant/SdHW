@@ -60,6 +60,7 @@ class GameViewIml(width: Int, height: Int): GameView {
 
 
     override fun draw(model: ModelReadOnly) {
+        terminal.drainLayers()
         fieldLayer.draw(model)
         infoLayer.draw(model)
         artifactsLayer.draw(model)
