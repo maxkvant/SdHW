@@ -9,5 +9,5 @@ import ru.spbau.maxim.model.Model
  */
 class Frozen: EffectAbstract() {
     val timeActive = 3
-    override fun turn(env: Model): Action = Rest()
+    override fun turn(env: Model): Action = Rest
 }

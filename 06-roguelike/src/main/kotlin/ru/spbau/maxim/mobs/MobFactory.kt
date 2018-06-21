@@ -18,7 +18,7 @@ import ru.spbau.maxim.model.Model
 /**
  * Contains that can create
  */
-class MobFactory {
+object MobFactory {
     private val enemyHp: Int = 40
     private val playerHp = 100
 
@@ -108,7 +108,7 @@ class MobFactory {
                 PlayerTurn.DOWN  -> Position(pos.i + 1, pos.j)
             }
             return if (posTo == pos) {
-                Rest()
+                Rest
             } else {
                 val victim = env.getMob(posTo)
                 if (victim == null) Move(this, posTo) else HitSibling(pos, victim)

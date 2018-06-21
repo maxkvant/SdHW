@@ -7,7 +7,7 @@ import ru.spbau.maxim.model.ModelReadOnly
 /**
  * Action to rest (do nothing)
  */
-class Rest: Action {
+object Rest: Action {
     override fun execute(author: MobWithEffects, model: Model) {}
 
     override fun validate(author: MobWithEffects, model: ModelReadOnly): Boolean {

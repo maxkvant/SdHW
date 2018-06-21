@@ -18,7 +18,6 @@ import kotlin.math.roundToInt
  * density is fraction mobs in space cells of field
  */
 fun generateMobs(field: FieldReadOnly<Cell>, density: Double): Pair<PlayerMobWithEffects, List<MobWithEffects>> {
-    val factory = MobFactory()
 
     fun generateMob(position: Position): MobWithEffects {
         val i = Random().nextInt() % 4
@@ -26,10 +25,10 @@ fun generateMobs(field: FieldReadOnly<Cell>, density: Double): Pair<PlayerMobWit
         val knife = Artifact({ Knife() }, "knife")
         val freezer = Artifact({ Freezer() }, "freezer")
         return when (i) {
-            0 -> factory.enemyNoArtifacts(position)
-            1 -> factory.enemyOneArtifact(position, helmet)
-            2 -> factory.enemyOneArtifact(position, knife)
-            else -> factory.enemyOneArtifact(position, freezer)
+            0 -> MobFactory.enemyNoArtifacts(position)
+            1 -> MobFactory.enemyOneArtifact(position, helmet)
+            2 -> MobFactory.enemyOneArtifact(position, knife)
+            else -> MobFactory.enemyOneArtifact(position, freezer)
         }
     }
 
@@ -49,7 +48,7 @@ fun generateMobs(field: FieldReadOnly<Cell>, density: Double): Pair<PlayerMobWit
 
     val enemiesPositions: List<Position> = positions.subList(1, resSize)
     val playerPos = positions[0]
-    val player = factory.playerMobWithEffects(playerPos)
+    val player = MobFactory.playerMobWithEffects(playerPos)
     val enemies = enemiesPositions.map { generateMob(it) }
     return Pair(player, enemies)
 }
