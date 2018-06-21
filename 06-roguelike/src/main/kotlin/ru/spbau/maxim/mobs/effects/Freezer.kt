@@ -9,7 +9,7 @@ import java.util.*
 /**
  * Freezer effect: substitutes every Hit action to FreezeSibling action Action with probability 1/2
  */
-class Freezer: EffectAbstract() {
+class Freezer: EffectImpl() {
     override fun turn(env: Model): Action {
         val action = super.turn(env)
         return when (action) {
