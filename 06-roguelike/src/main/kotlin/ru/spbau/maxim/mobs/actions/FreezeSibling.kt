@@ -22,7 +22,7 @@ class FreezeSibling(
     }
 
     override fun execute(author: MobWithEffects, model: Model) {
-        if (!victim.hasDecorator(Freezer::class)) {
+        if (!victim.hasDecorator(Frozen::class)) {
             val effect = Frozen()
             victim.addDecorator(effect, effect.timeActive, model)
         } else {

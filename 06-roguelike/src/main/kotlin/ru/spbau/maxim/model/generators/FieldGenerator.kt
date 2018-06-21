@@ -34,9 +34,5 @@ fun generateField(n: Int, m: Int): FieldReadOnly<Cell> {
         }
     }
 
-    return object : FieldReadOnly<Cell> {
-        override fun get(position: Position): Cell = arr[position.i][position.j]
-        override val rows = n
-        override val columns: Int = m
-    }
+    return FieldReadOnly.of(arr)
 }

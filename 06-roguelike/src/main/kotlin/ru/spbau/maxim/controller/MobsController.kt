@@ -53,6 +53,7 @@ class MobsController(private val model: Model): SubController {
     }
 
     private fun turn() {
+        val timeBefore = System.currentTimeMillis()
         model.nextTurn {
             getPlayer().increaseHp(1)
             if (!finished()) {
@@ -97,5 +98,7 @@ class MobsController(private val model: Model): SubController {
                 }
             }
         }
+        val turnTimeMillis = System.currentTimeMillis() - timeBefore
+        logger.info { "turn processing took ${turnTimeMillis}ms" }
     }
 }
