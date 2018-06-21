@@ -1,0 +1,9 @@
+language: java
+jdk:
+  - oraclejdk8
+os:
+  - linux
+env: 
+  - SOURCE_DIR_1=06-roguelike
+script:
+  - cd $SOURCE_DIR_1 && ./gradlew check && cd ..
