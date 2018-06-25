@@ -7,8 +7,7 @@ scala:
 os:
   - linux
 env:
-  - SOURCE_DIR_1=01-shell
-  - SOURCE_DIR_2=06-roguelike
+  - SOURCE_DIR_1=01-shell SOURCE_DIR_2=06-roguelike
 script:
   - cd $SOURCE_DIR_1 && sbt ++$TRAVIS_SCALA_VERSION test && cd ..
   - cd $SOURCE_DIR_2 && ./gradlew check && cd ..
