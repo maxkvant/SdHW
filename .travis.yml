@@ -1,9 +1,14 @@
 language: java
 jdk:
   - oraclejdk8
+language: scala
+scala:
+   - 2.11.2
 os:
   - linux
-env: 
-  - SOURCE_DIR_1=06-roguelike
+env:
+  - SOURCE_DIR_1=01-shell
+  - SOURCE_DIR_2=06-roguelike
 script:
-  - cd $SOURCE_DIR_1 && ./gradlew check && cd ..
+  - cd $SOURCE_DIR_1 && sbt ++$TRAVIS_SCALA_VERSION test && cd ..
+  - cd $SOURCE_DIR_2 && ./gradlew check && cd ..
